@@ -7,8 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import com.SGSRveiculo.controller.HomeController;
 
 
+
 @SpringBootApplication
-@ComponentScan(basePackageClasses={HomeController.class})
+@ComponentScan(basePackageClasses={HomeController.class}, basePackages="com.SGSRveiculo.*")
 public class SgsRveiculoApplication {
 
 	public static void main(String[] args) {
