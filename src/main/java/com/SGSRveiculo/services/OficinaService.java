@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.SGSRveiculo.frameworkPDS.models.PrestadoraF;
+import com.SGSRveiculo.frameworkPDS.services.PrestadoraService;
 import com.SGSRveiculo.models.Oficina;
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
-import com.frameworkPDS.models.PrestadoraF;
-import com.frameworkPDS.services.PrestadoraService;
 
 @Service
 public class OficinaService extends PrestadoraService{

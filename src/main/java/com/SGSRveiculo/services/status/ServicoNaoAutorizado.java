@@ -1,6 +1,6 @@
 package com.SGSRveiculo.services.status;
 
-import com.frameworkPDS.services.status.StatusServico;
+import com.SGSRveiculo.frameworkPDS.services.status.StatusServico;
 
 public class ServicoNaoAutorizado extends StatusServico{
 

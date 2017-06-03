@@ -3,13 +3,12 @@ package com.SGSRveiculo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SGSRveiculo.frameworkPDS.repository.MarcaModeloRepository;
+import com.SGSRveiculo.frameworkPDS.repository.ProdutoRepository;
+import com.SGSRveiculo.frameworkPDS.services.ProdutoService;
 import com.SGSRveiculo.models.InfoExtraVeiculo;
 import com.SGSRveiculo.models.Veiculo;
 import com.SGSRveiculo.repositories.InfoExtraVeiculoRepository;
-import com.frameworkPDS.models.MarcaModeloF;
-import com.frameworkPDS.repository.MarcaModeloRepository;
-import com.frameworkPDS.repository.ProdutoRepository;
-import com.frameworkPDS.services.ProdutoService;
 
 @Service
 public class VeiculoService extends ProdutoService implements IVeiculoService {

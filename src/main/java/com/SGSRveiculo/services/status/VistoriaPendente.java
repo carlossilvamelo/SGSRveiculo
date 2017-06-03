@@ -1,8 +1,6 @@
 package com.SGSRveiculo.services.status;
 
-import java.util.List;
-
-import com.frameworkPDS.services.status.StatusServico;
+import com.SGSRveiculo.frameworkPDS.services.status.StatusServico;
 
 public class VistoriaPendente extends StatusServico{
 	

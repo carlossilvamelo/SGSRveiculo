@@ -1,6 +1,5 @@
 package com.SGSRveiculo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,15 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SGSRveiculo.frameworkPDS.models.ServicoF;
+import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
+import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.Oficina;
 import com.SGSRveiculo.models.Servico;
 import com.SGSRveiculo.models.Veiculo;
 import com.SGSRveiculo.services.OficinaService;
 import com.SGSRveiculo.services.VeiculoService;
-import com.frameworkPDS.models.ServicoF;
-import com.frameworkPDS.services.ContratanteService;
-import com.frameworkPDS.services.ServicoService;
 
 
 @Controller

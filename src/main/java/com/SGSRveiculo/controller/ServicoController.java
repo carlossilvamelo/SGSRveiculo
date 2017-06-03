@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.SGSRveiculo.models.CheckIn;
+import com.SGSRveiculo.frameworkPDS.models.CheckInF;
+import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
+import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.Oficina;
 import com.SGSRveiculo.models.Servico;
 import com.SGSRveiculo.models.Veiculo;
 import com.SGSRveiculo.services.OficinaService;
 import com.SGSRveiculo.services.VeiculoService;
-import com.frameworkPDS.models.CheckInF;
-import com.frameworkPDS.services.ContratanteService;
-import com.frameworkPDS.services.ServicoService;
 
 @Controller
 @RequestMapping("/servico")

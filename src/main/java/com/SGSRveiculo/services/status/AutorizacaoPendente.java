@@ -1,8 +1,6 @@
 package com.SGSRveiculo.services.status;
 
-import org.apache.tomcat.jni.Status;
-
-import com.frameworkPDS.services.status.StatusServico;
+import com.SGSRveiculo.frameworkPDS.services.status.StatusServico;
 
 public class AutorizacaoPendente extends StatusServico{
 

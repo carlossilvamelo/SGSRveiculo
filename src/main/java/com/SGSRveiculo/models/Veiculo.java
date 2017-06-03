@@ -2,7 +2,9 @@ package com.SGSRveiculo.models;
 
 import javax.persistence.Entity;
 
-import com.frameworkPDS.models.ProdutoF;
+import com.SGSRveiculo.frameworkPDS.models.ProdutoF;
+
+
 
 @Entity
 public class Veiculo extends ProdutoF{
