@@ -1,8 +1,10 @@
-package com.SGSR.veiculo.services.status;
+package com.SGSRveiculo.services.status;
 
-public class AguerdandoPecas extends StatusServico {
+import com.frameworkPDS.services.status.StatusServico;
 
-	public AguerdandoPecas() {
+public class AguardandoPecas extends StatusServico {
+
+	public AguardandoPecas() {
 		super("Aguardando peças");
 		// TODO Auto-generated constructor stub
 	}

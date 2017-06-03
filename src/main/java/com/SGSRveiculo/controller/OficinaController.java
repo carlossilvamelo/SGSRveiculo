@@ -17,24 +17,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.ProjetoPDS.App.Enumeracoes.EnumCores;
-import br.com.ProjetoPDS.App.Enumeracoes.EnumStatus;
-import br.com.ProjetoPDS.App.Enumeracoes.TipoPessoa;
-import br.com.ProjetoPDS.App.Models.Cliente;
-import br.com.ProjetoPDS.App.Models.MarcaModelo;
-import br.com.ProjetoPDS.App.Models.Oficina;
-import br.com.ProjetoPDS.App.Models.Servico;
-import br.com.ProjetoPDS.App.Models.Veiculo;
-import br.com.ProjetoPDS.App.Service.ClienteService;
-import br.com.ProjetoPDS.App.Service.OficinaService;
-import br.com.ProjetoPDS.App.Service.ServicoService;
-import br.com.ProjetoPDS.App.Service.VeiculoService;
+import com.SGSRveiculo.models.Cliente;
+import com.SGSRveiculo.models.Oficina;
+import com.SGSRveiculo.models.Servico;
+import com.SGSRveiculo.models.Veiculo;
+import com.SGSRveiculo.services.OficinaService;
+import com.SGSRveiculo.services.VeiculoService;
+import com.frameworkPDS.models.ServicoF;
+import com.frameworkPDS.services.ContratanteService;
+import com.frameworkPDS.services.ServicoService;
+
 
 @Controller
 @RequestMapping("/oficina")
 public class OficinaController {
 	@Autowired
-	private ClienteService clienteService;
+	private ContratanteService clienteService;
 	@Autowired
 	private OficinaService oficinaService;
 	@Autowired
@@ -48,7 +46,7 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/oficina");
 		
 		Oficina oficina = (Oficina) session.getAttribute("usuario");
-		List<Servico> listaServicos = servicoService.buscarServicosPorIdOficina(oficina);
+		List<ServicoF> listaServicos = servicoService.buscarServicosPorPrestadora(oficina);
 		mv.addObject("listaServicos",listaServicos);
 		
 		return mv;
@@ -78,7 +76,7 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/todosServicos");
 		//descer para a camada de validação
 		Oficina temp = (Oficina) session.getAttribute("usuario");
-		Oficina oficina = oficinaService.buscarPorId(temp.getId());
+		Oficina oficina = (Oficina)oficinaService.buscarPorId(temp.getId());
 		return mv;
 	}
 	
@@ -103,9 +101,9 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/formVeiculoOficina");
 
 		Veiculo veiculo = new Veiculo();
-		List<String> marcas = veiculoService.listarMarcas();
-		mv.addObject("cores", EnumCores.values());
-		mv.addObject("marcas", marcas);
+		//List<String> marcas = veiculoService.listarMarcas();
+		//mv.addObject("cores", EnumCores.values());
+		//mv.addObject("marcas", marcas);
 		mv.addObject("veiculo", veiculo);
 		
 		return mv;
@@ -114,9 +112,10 @@ public class OficinaController {
 	@GetMapping("/listarModelos" )
 	public  @ResponseBody List<String> listarModelos( String marca){
 		
-		List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
 		
-		return modelos;
+		//return modelos;
+		return null;
 		
 	}
 	
@@ -126,9 +125,9 @@ public class OficinaController {
 		
 		ModelAndView mv = new ModelAndView("oficina/formVeiculoOficina");
 		
-		MarcaModelo m = veiculoService.listarMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
+		//MarcaModelo m = veiculoService.listarMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
 		
-		veiculo.setMarcaModelo(m);
+		//veiculo.setMarcaModelo(m);
 		
 		//veiculo.setCliente(cliente);
 		//cliente.addVeiculo(veiculo);
@@ -149,7 +148,6 @@ public class OficinaController {
 	@PostMapping("/novoCliente")
 	public ModelAndView cadastroClienteOficina(Cliente cliente, HttpSession session){
 		ModelAndView mv = new ModelAndView("redirect:/oficina/");
-		cliente.setTipo(TipoPessoa.FISICA);
 		clienteService.inserir(cliente);
 		
 		return mv;

@@ -1,4 +1,6 @@
-package com.SGSR.veiculo.services.status;
+package com.SGSRveiculo.services.status;
+
+import com.frameworkPDS.services.status.StatusServico;
 
 public class ServicoAutorizado extends StatusServico {
 
@@ -10,7 +12,7 @@ public class ServicoAutorizado extends StatusServico {
 	@Override
 	public StatusServico proximo() {
 		// TODO Auto-generated method stub
-		return new AguerdandoPecas();
+		return new AguardandoPecas();
 	}
 
 }

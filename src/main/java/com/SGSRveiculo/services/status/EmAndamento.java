@@ -1,4 +1,6 @@
-package com.SGSR.veiculo.services.status;
+package com.SGSRveiculo.services.status;
+
+import com.frameworkPDS.services.status.StatusServico;
 
 public class EmAndamento extends StatusServico{
 

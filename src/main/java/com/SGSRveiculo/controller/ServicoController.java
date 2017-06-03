@@ -1,11 +1,9 @@
 package com.SGSRveiculo.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,25 +15,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.ProjetoPDS.App.Enumeracoes.EnumCores;
-import br.com.ProjetoPDS.App.Enumeracoes.EnumStatus;
-import br.com.ProjetoPDS.App.Models.CheckIn;
-import br.com.ProjetoPDS.App.Models.Cliente;
-import br.com.ProjetoPDS.App.Models.Oficina;
-import br.com.ProjetoPDS.App.Models.Servico;
-import br.com.ProjetoPDS.App.Models.Veiculo;
-
-import br.com.ProjetoPDS.App.Service.ClienteService;
-import br.com.ProjetoPDS.App.Service.OficinaService;
-import br.com.ProjetoPDS.App.Service.ServicoService;
-import br.com.ProjetoPDS.App.Service.VeiculoService;
+import com.SGSRveiculo.models.CheckIn;
+import com.SGSRveiculo.models.Cliente;
+import com.SGSRveiculo.models.Oficina;
+import com.SGSRveiculo.models.Servico;
+import com.SGSRveiculo.models.Veiculo;
+import com.SGSRveiculo.services.OficinaService;
+import com.SGSRveiculo.services.VeiculoService;
+import com.frameworkPDS.models.CheckInF;
+import com.frameworkPDS.services.ContratanteService;
+import com.frameworkPDS.services.ServicoService;
 
 @Controller
 @RequestMapping("/servico")
 public class ServicoController {
 
 	@Autowired
-	private ClienteService clienteService;
+	private ContratanteService clienteService;
 	@Autowired
 	private OficinaService oficinaService;
 	@Autowired
@@ -50,17 +46,19 @@ public class ServicoController {
 		Servico servico = new Servico();
 		
 		Cliente cliente = (Cliente) session.getAttribute("usuario");
-		Cliente temp = clienteService.buscarPorId(cliente.getId());
+		Cliente temp = (Cliente) clienteService.buscarPorId(cliente.getId());
 		
-		List<Veiculo> veiculos = temp.getVeiculo();
-		List<Oficina> oficinas = oficinaService.buscarTodos();
+		//List<Veiculo> veiculos = temp.getVeiculo();
+		List<Oficina> oficinas = oficinaService.buscarTodasOficinas();
+		
+		
 		
 		if(descricao != null){
 			servico.setDescricao(descricao);
 		}
 		
 		mv.addObject("servico", servico);
-		mv.addObject("veiculos", veiculos);
+		//mv.addObject("veiculos", veiculos);
 		mv.addObject("oficinas", oficinas);
 		
 		return mv;
@@ -71,14 +69,14 @@ public class ServicoController {
 
 		ModelAndView mv = new ModelAndView("redirect:/cliente");
 		Cliente tmp = (Cliente) session.getAttribute("usuario");
-		Cliente cliente = clienteService.buscarPorId(tmp.getId());
+		Cliente cliente = (Cliente) clienteService.buscarPorId(tmp.getId());
 
-		servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
+		//servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
 		
-		System.out.println("Veiculo: " + servico.getVeiculo().getNumeroChassi());
-		servico.setOficina(oficinaService.buscarPJ(servico.getOficina().getId()));
-		servico.setVeiculo(veiculoService.buscarPorId(servico.getVeiculo().getNumeroChassi()));
-		servico.setResponsavel(cliente);
+		System.out.println("Veiculo: " + servico.getProduto().getId());
+		servico.setPrestadora(oficinaService.buscarPorId(servico.getPrestadora().getId()));
+		servico.setProduto(veiculoService.buscarPorId(servico.getProduto().getId()));
+		servico.setContratante(cliente);
 		cliente.addServico(servico);
 		
 		servicoService.inserir(servico);
@@ -95,9 +93,9 @@ public class ServicoController {
 		Servico servico = new Servico();
 		
 		//Pegando informações para veículo
-		List<String> marcas = veiculoService.listarMarcas();
-		mv.addObject("cores", EnumCores.values());
-		mv.addObject("marcas", marcas);
+		//List<String> marcas = veiculoService.listarMarcas();
+		//mv.addObject("cores", EnumCores.values());
+		//mv.addObject("marcas", marcas);
 		
 		mv.addObject("servico", servico);
 		
@@ -107,9 +105,11 @@ public class ServicoController {
 	@GetMapping("/listarModelos" )
 	public  @ResponseBody List<String> listarModelos( String marca){
 		
-		List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
 		
-		return modelos;
+		//return modelos;
+		
+		return null;
 		
 	}
 	
@@ -118,12 +118,12 @@ public class ServicoController {
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");
 		Oficina tmp = (Oficina) session.getAttribute("usuario");
-		Oficina oficina = oficinaService.buscarPorId(tmp.getId());
+		Oficina oficina = (Oficina) oficinaService.buscarPorId(tmp.getId());
 
-		servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
-		servico.setOficina(oficina);
+		//servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
+		servico.setPrestadora(oficina);
 		
-		Cliente cliente = clienteService.buscarPF(servico.getCliente().getId());
+		Cliente cliente = (Cliente) clienteService.buscarPorId(servico.getContratante().getId());
 		
 		if(cliente == null){
 			attributes.addAttribute("message", "Cliente não cadastrado.");
@@ -132,12 +132,12 @@ public class ServicoController {
 		}
 		else{
 			Veiculo veiculoAtual = null;
-			List<Veiculo> veiculos = cliente.getVeiculo();
-			for (int i = 0; i < veiculos.size(); i++) {
+			//List<Veiculo> veiculos = cliente.getVeiculo();
+			/*for (int i = 0; i < veiculos.size(); i++) {
 				if(veiculos.get(i).getPlaca().equals(servico.getVeiculo().getPlaca())){
 					veiculoAtual = veiculoService.buscarPorId(veiculos.get(i).getNumeroChassi());
 				}
-			}
+			}*/
 			
 			if(veiculoAtual == null){
 				attributes.addFlashAttribute("message", "Carro não cadastrado.");
@@ -145,8 +145,8 @@ public class ServicoController {
 				return mv;
 			}
 			
-			servico.setCliente(cliente);
-			servico.setVeiculo(veiculoAtual);
+			servico.setContratante(cliente);
+			servico.setProduto(veiculoAtual);
 			oficina.addServico(servico);
 			cliente.addServico(servico);
 			servicoService.inserir(servico);
@@ -169,7 +169,7 @@ public class ServicoController {
 		
 		ModelAndView mv = new ModelAndView("/servico/relatorioServico");
 		
-		Servico servico = servicoService.buscarPorId(id);
+		Servico servico = (Servico) servicoService.buscarPorId(id);
 		mv.addObject("servico",servico);
 		
 		return mv;
@@ -180,7 +180,7 @@ public class ServicoController {
 	public ModelAndView proximoStatus(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.proximoStatus(id);
+		//servicoService.proximoStatus(id);
 		return mv;
 	}
 	
@@ -188,7 +188,7 @@ public class ServicoController {
 	public ModelAndView aprovarServico(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.aprovarOrcamentoServico(id);
+		//servicoService.aprovarOrcamentoServico(id);
 		return mv;
 	}
 	
@@ -196,7 +196,7 @@ public class ServicoController {
 	public ModelAndView vistoriaPendente(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.vistoriaPendente(id);
+		//servicoService.vistoriaPendente(id);
 		return mv;
 	}
 	
@@ -204,7 +204,7 @@ public class ServicoController {
 	public ModelAndView naoAutorizado(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.vistoriaPendente(id);
+		//servicoService.vistoriaPendente(id);
 		return mv;
 	}
 	
@@ -212,7 +212,7 @@ public class ServicoController {
 	public ModelAndView aguardandoPecas(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.aguardandoPecas(id);
+		//servicoService.aguardandoPecas(id);
 		return mv;
 	}
 	
@@ -220,7 +220,7 @@ public class ServicoController {
 	public ModelAndView aguardandoCliente(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.aguardandoCliente(id);
+		//servicoService.aguardandoCliente(id);
 		return mv;
 	}
 	
@@ -228,7 +228,7 @@ public class ServicoController {
 	public ModelAndView emAndamento(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.emAndamento(id);
+		//servicoService.emAndamento(id);
 		return mv;
 	}
 	
@@ -236,7 +236,7 @@ public class ServicoController {
 	public ModelAndView finalizado(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		servicoService.finalizado(id);
+		//servicoService.finalizado(id);
 		return mv;
 	}
 	
@@ -245,14 +245,14 @@ public class ServicoController {
 		
 		ModelAndView mv = new ModelAndView("/servico/acompanhamento");	
 		
-		Servico servico =  servicoService.buscarPorId(id);
-		List<CheckIn> lista = null;
+		Servico servico =  (Servico) servicoService.buscarPorId(id);
+		List<CheckInF> lista = null;
 		
 		
 		
 		if(servico != null){
 			
-			lista = servico.getCheckin();
+			lista = servico.getAcompanhamento().getCheckIns();
 			
 			if(lista.isEmpty()){
 				

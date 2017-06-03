@@ -5,10 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.SGSRveiculo.controller.HomeController;
+import com.frameworkPDS.repository.ContratanteRepository;
+import com.frameworkPDS.services.ContratanteService;
+import com.frameworkPDS.services.ServicoService;
 
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses={HomeController.class})
+@ComponentScan(basePackages = "com.frameworkPDS")
 public class SgsRveiculoApplication {
 
 	public static void main(String[] args) {
