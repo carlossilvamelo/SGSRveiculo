@@ -1,18 +1,14 @@
 package com.SGSRveiculo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,20 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.ProjetoPDS.App.Enumeracoes.EnumCores;
-import br.com.ProjetoPDS.App.Enumeracoes.EnumStatus;
-import br.com.ProjetoPDS.App.Enumeracoes.TipoPessoa;
-import br.com.ProjetoPDS.App.Exceptions.CamadaServicoException;
-import br.com.ProjetoPDS.App.Models.Alerta;
-import br.com.ProjetoPDS.App.Models.Cliente;
-import br.com.ProjetoPDS.App.Models.InfoExtraVeiculo;
-import br.com.ProjetoPDS.App.Models.MarcaModelo;
-import br.com.ProjetoPDS.App.Models.Servico;
-import br.com.ProjetoPDS.App.Models.Veiculo;
-import br.com.ProjetoPDS.App.Service.ClienteService;
-import br.com.ProjetoPDS.App.Service.ServicoService;
-import br.com.ProjetoPDS.App.Service.ValidacoesService;
-import br.com.ProjetoPDS.App.Service.VeiculoService;
+import com.SGSRveiculo.frameworkPDS.models.ServicoF;
+import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
+import com.SGSRveiculo.frameworkPDS.services.ServicoService;
+import com.SGSRveiculo.models.Cliente;
+import com.SGSRveiculo.models.InfoExtraVeiculo;
+import com.SGSRveiculo.models.Veiculo;
+import com.SGSRveiculo.services.VeiculoService;
+
+
 
 @Controller
 @RequestMapping("/cliente")
@@ -41,8 +32,7 @@ public class ClienteController {
 
 
 	@Autowired
-	private ClienteService clienteService;
-	
+	private ContratanteService clienteService;
 	@Autowired
 	private VeiculoService veiculoService;
 	@Autowired
@@ -54,7 +44,7 @@ public class ClienteController {
 		ModelAndView mv = new ModelAndView("cliente/cliente");
 		//buscar cliente pelo id
 		Cliente cliente = (Cliente) session.getAttribute("usuario");
-		List<Servico> listaServicos = servicoService.buscarServicosPorIdCliente(cliente);
+		List<ServicoF> listaServicos = servicoService.buscarServicosPorContratante(cliente);
 		mv.addObject("listaServicos",listaServicos);
 		
 		return mv;
@@ -75,16 +65,17 @@ public class ClienteController {
 		
 		boolean cpfValido = true;
 		ModelAndView mv = new ModelAndView("cliente/form");
-		cliente.setTipo(TipoPessoa.FISICA);
 		
-		ValidacoesService validacaoCpf = ValidacoesService.getInstance();
+		clienteService.inserir(cliente);
+		
+		/*ValidacoesService validacaoCpf = ValidacoesService.getInstance();
 		try {
 			
 			validacaoCpf.validarCpf(cliente.getId());
 			clienteService.inserir(cliente);
 		} catch (CamadaServicoException e) {
 			cpfValido = false;
-		}
+		}*/
 		mv.addObject("cpfValido", cpfValido);
 		attributes.addFlashAttribute("message", "O cliente foi cadastrado!");
 		return mv;
@@ -98,9 +89,9 @@ public class ClienteController {
 		ModelAndView mv = new ModelAndView("cliente/formVeiculo");
 
 		Veiculo veiculo = new Veiculo();
-		List<String> marcas = veiculoService.listarMarcas();
-		mv.addObject("cores", EnumCores.values());
-		mv.addObject("marcas", marcas);
+		//List<String> marcas = veiculoService.listarMarcas();
+		//mv.addObject("cores", EnumCores.values());
+		//mv.addObject("marcas", marcas);
 		mv.addObject("veiculo", veiculo);
 		
 		return mv;
@@ -111,8 +102,7 @@ public class ClienteController {
 		
 		ModelAndView mv = new ModelAndView("cliente/formVeiculo");
 		
-		Cliente cliente = (Cliente) session.getAttribute("usuario");
-		//Cliente cliente = clienteService.buscarPorId(temp.getId());
+		/*Cliente cliente = (Cliente) session.getAttribute("usuario");
 		
 		MarcaModelo m = veiculoService.listarMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
 		
@@ -122,7 +112,7 @@ public class ClienteController {
 		cliente.addVeiculo(veiculo);
 		
 		clienteService.inserir(cliente);
-		mv.addObject("message", "Veículo adicionado!");
+		mv.addObject("message", "Veículo adicionado!");*/
 		return mv;
 	}
 	
@@ -132,17 +122,17 @@ public class ClienteController {
 		ModelAndView mv = new ModelAndView("cliente/meusVeiculos");
 		
 		Cliente temp = (Cliente) session.getAttribute("usuario");
-		Cliente cliente = clienteService.buscarPorId(temp.getId());
+		Cliente cliente = (Cliente)clienteService.buscarPorId(temp.getId());
 		
-		clienteService.verificaVeiculo(cliente.getId());
+		//clienteService.verificaVeiculo(cliente.getId());
 		
-		for(Veiculo veiculo : cliente.getVeiculo()){
+		/*for(Veiculo veiculo : cliente.getVeiculo()){
 			
 			for(Alerta alerta : veiculo.getAlertas()){
 				
 				System.out.println(alerta.getTipo());
 			}
-		}
+		}*/
 		
 		mv.addObject("cliente", cliente);
 		return mv;
@@ -155,7 +145,7 @@ public class ClienteController {
 		ModelAndView mv = new ModelAndView("cliente/formInfoExtra");
 		
 		InfoExtraVeiculo infoExtraVeiculo = new InfoExtraVeiculo();
-		Veiculo veiculo = veiculoService.buscarPorId(id);
+		Veiculo veiculo = (Veiculo)veiculoService.buscarPorId(id);
 		
 		mv.addObject("veiculo", veiculo);
 		mv.addObject("infoExtraVeiculo", infoExtraVeiculo);
@@ -200,9 +190,11 @@ public class ClienteController {
 	public  @ResponseBody List<String> listarModelos( String marca){
 		
 		
-		List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
 		
-		return modelos;
+		//return modelos;
+		
+		return null;
 		
 	}
 	
