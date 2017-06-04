@@ -1,42 +1,27 @@
 package com.SGSRveiculo.frameworkPDS.services.status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class StatusServico{
 	
-	List<StatusServico> proximosPossiveis;
-	private String nome;
+	private ArrayList<StatusServico> proximosStatusPossiveis;
 	
-	public StatusServico(String nome){
-		this.nome = nome;
+	private String nomeStatus;
+	private ArrayList<String> nomesAcoesParaProximoStatus;
+	
+	public StatusServico(){
+		
 	}
 	
 	
 	public abstract StatusServico proximo();
-	
-	
-	public String getNome(){
-		return nome;
-	}
-	
-	
-
-	public List<StatusServico> getProximosPossiveis() {
-		return proximosPossiveis;
-	}
-
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 
 	public static StatusServico consultarStatusAtual(String nome, StatusServico statusInicial){
 		
 		
 		while(statusInicial != null){
-			if(statusInicial.getNome().equals(nome))
+			if(statusInicial.getNomeStatus().equals(nome))
 				return statusInicial;
 			
 			statusInicial = statusInicial.proximo();
@@ -44,6 +29,38 @@ public abstract class StatusServico{
 		}
 		return null;
 	}
+
+
+	public ArrayList<StatusServico> getProximosStatusPossiveis() {
+		return proximosStatusPossiveis;
+	}
+
+
+	public void setProximosStatusPossiveis(ArrayList<StatusServico> proximosStatusPossiveis) {
+		this.proximosStatusPossiveis = proximosStatusPossiveis;
+	}
+
+
+	public String getNomeStatus() {
+		return nomeStatus;
+	}
+
+
+	public void setNomeStatus(String nomeStatus) {
+		this.nomeStatus = nomeStatus;
+	}
+
+
+	public ArrayList<String> getNomesAcoesParaProximoStatus() {
+		return nomesAcoesParaProximoStatus;
+	}
+
+
+	public void setNomesAcoesParaProximoStatus(ArrayList<String> nomesAcoesParaProximoStatus) {
+		this.nomesAcoesParaProximoStatus = nomesAcoesParaProximoStatus;
+	}
+
+
 	
 	
 	

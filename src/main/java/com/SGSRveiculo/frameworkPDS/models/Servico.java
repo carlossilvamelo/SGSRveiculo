@@ -41,6 +41,8 @@ public class Servico implements Serializable{
 	@JoinColumn(name="id_MarcaModelo")
 	private MarcaModelo marcaModelo;
 	
+	private String status;
+	
 	@DateTimeFormat(pattern="dd/mm/yyyy")
 	private Date dataRequerimento;
 	
@@ -155,6 +157,14 @@ public class Servico implements Serializable{
 
 	public void setObs(String obs) {
 		this.obs = obs;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

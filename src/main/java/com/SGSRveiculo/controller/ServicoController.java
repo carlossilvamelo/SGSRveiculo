@@ -19,11 +19,13 @@ import com.SGSRveiculo.frameworkPDS.models.CheckIn;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
+import com.SGSRveiculo.frameworkPDS.services.status.StatusServico;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.Oficina;
 import com.SGSRveiculo.models.Veiculo;
 import com.SGSRveiculo.services.OficinaService;
 import com.SGSRveiculo.services.VeiculoService;
+import com.SGSRveiculo.services.status.PreDiagnostico;
 
 @Controller
 @RequestMapping("/servico")
@@ -70,7 +72,9 @@ public class ServicoController {
 		Cliente tmp = (Cliente) session.getAttribute("usuario");
 		Cliente cliente = (Cliente) clienteService.buscarPorId(tmp.getId());
 
-		//servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
+		
+		StatusServico status = new PreDiagnostico();//status inicial
+		servico.setStatus(status.getNome());
 		
 		System.out.println("Veiculo: " + servico.getProduto().getId());
 		servico.setPrestadora(oficinaService.buscarPorId(servico.getPrestadora().getId()));
