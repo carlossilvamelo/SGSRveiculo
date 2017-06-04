@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class OrcamentoF implements Serializable{
+public class Orcamento implements Serializable{
 	
 
 	private static final long serialVersionUID = -3329162767984686645L;
@@ -30,7 +30,7 @@ public class OrcamentoF implements Serializable{
 	private Double descontoValor;
 	private Integer descontoPorcentagem;
 	
-	public OrcamentoF() {
+	public Orcamento() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -68,20 +68,20 @@ public class OrcamentoF implements Serializable{
 	}
 
 
-	public ServicoF getServico() {
+	public Servico getServico() {
 		return servico;
 	}
 
-	public void setServico(ServicoF servico) {
+	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
 
 	@OneToMany(mappedBy="orcamento",fetch=FetchType.LAZY, cascade= CascadeType.ALL)
-	private List<PecaF> pecasTroca;
+	private List<Peca> pecasTroca;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="id_servico")
-	private ServicoF servico;
+	private Servico servico;
 
 	public Double getPrecoMaoObra() {
 		return precoMaoObra;
@@ -91,17 +91,17 @@ public class OrcamentoF implements Serializable{
 		this.precoMaoObra = precoMaoObra;
 	}
 
-	public List<PecaF> getPecasTroca() {
+	public List<Peca> getPecasTroca() {
 		return pecasTroca;
 	}
 
-	private void setPecasTroca(List<PecaF> pecasTroca) {
+	private void setPecasTroca(List<Peca> pecasTroca) {
 		this.pecasTroca = pecasTroca;
 	}
 	
-	public void addPeca(PecaF peca){
+	public void addPeca(Peca peca){
 		
-		setPecasTroca(new ArrayList<PecaF>());
+		setPecasTroca(new ArrayList<Peca>());
 		pecasTroca.add(peca);
 	}
 

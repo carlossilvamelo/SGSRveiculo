@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.SGSRveiculo.frameworkPDS.models.ServicoF;
+import com.SGSRveiculo.enumeracoes.EnumCores;
+import com.SGSRveiculo.enumeracoes.EnumMarcasModelos;
+import com.SGSRveiculo.frameworkPDS.models.MarcaModelo;
+import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
+import com.SGSRveiculo.frameworkPDS.services.MarcaModeloService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.InfoExtraVeiculo;
@@ -37,6 +41,9 @@ public class ClienteController {
 	private VeiculoService veiculoService;
 	@Autowired
 	private ServicoService servicoService;
+	@Autowired
+	private MarcaModeloService marcaModeloService;
+	
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView cliente(HttpSession session){
@@ -44,7 +51,7 @@ public class ClienteController {
 		ModelAndView mv = new ModelAndView("cliente/cliente");
 		//buscar cliente pelo id
 		Cliente cliente = (Cliente) session.getAttribute("usuario");
-		List<ServicoF> listaServicos = servicoService.buscarServicosPorContratante(cliente);
+		List<Servico> listaServicos = servicoService.buscarServicosPorContratante(cliente);
 		mv.addObject("listaServicos",listaServicos);
 		
 		return mv;
@@ -89,12 +96,12 @@ public class ClienteController {
 		ModelAndView mv = new ModelAndView("cliente/formVeiculo");
 
 		Veiculo veiculo = new Veiculo();
-		//List<String> marcas = veiculoService.listarMarcas();
-		//mv.addObject("cores", EnumCores.values());
-		//mv.addObject("marcas", marcas);
+		List<String> marcas = EnumMarcasModelos.listaMarcas();
+		mv.addObject("cores", EnumCores.values());
+		mv.addObject("marcas", marcas);
 		mv.addObject("veiculo", veiculo);
 		
-		return mv;
+		return null;
 	}
 	
 	@PostMapping("/novoVeiculo")
@@ -102,17 +109,17 @@ public class ClienteController {
 		
 		ModelAndView mv = new ModelAndView("cliente/formVeiculo");
 		
-		/*Cliente cliente = (Cliente) session.getAttribute("usuario");
+		Cliente cliente = (Cliente) session.getAttribute("usuario");
 		
-		MarcaModelo m = veiculoService.listarMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
+		MarcaModelo m = marcaModeloService.buscarPorMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
 		
 		veiculo.setMarcaModelo(m);
 		
-		veiculo.setCliente(cliente);
-		cliente.addVeiculo(veiculo);
+		veiculo.setContratante(cliente);
+		cliente.addProduto(veiculo);
 		
 		clienteService.inserir(cliente);
-		mv.addObject("message", "Veículo adicionado!");*/
+		mv.addObject("message", "Veículo adicionado!");
 		return mv;
 	}
 	
@@ -121,12 +128,12 @@ public class ClienteController {
 		
 		ModelAndView mv = new ModelAndView("cliente/meusVeiculos");
 		
-		Cliente temp = (Cliente) session.getAttribute("usuario");
-		Cliente cliente = (Cliente)clienteService.buscarPorId(temp.getId());
+		//Cliente temp = (Cliente) session.getAttribute("usuario");
+		//Cliente cliente = (Cliente)clienteService.buscarPorId(temp.getId());
 		
 		//clienteService.verificaVeiculo(cliente.getId());
-		
-		/*for(Veiculo veiculo : cliente.getVeiculo()){
+		/*
+		for(Veiculo veiculo : cliente.getVeiculo()){
 			
 			for(Alerta alerta : veiculo.getAlertas()){
 				
@@ -134,7 +141,7 @@ public class ClienteController {
 			}
 		}*/
 		
-		mv.addObject("cliente", cliente);
+		//mv.addObject("cliente", cliente);
 		return mv;
 		
 	}
@@ -190,11 +197,11 @@ public class ClienteController {
 	public  @ResponseBody List<String> listarModelos( String marca){
 		
 		
-		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		List<String> modelos = marcaModeloService.buscarModelosPorMarca(marca);
 		
-		//return modelos;
+		return modelos;
 		
-		return null;
+		//return null;
 		
 	}
 	

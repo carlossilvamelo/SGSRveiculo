@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.MarcaModeloF;
-import com.SGSRveiculo.frameworkPDS.models.ProdutoF;
+import com.SGSRveiculo.frameworkPDS.models.MarcaModelo;
+import com.SGSRveiculo.frameworkPDS.models.Produto;
 import com.SGSRveiculo.frameworkPDS.repository.MarcaModeloRepository;
 import com.SGSRveiculo.frameworkPDS.repository.ProdutoRepository;
 
@@ -22,16 +22,16 @@ public class ProdutoService implements IProdutoService{
 	
 
 	@Override
-	public void inserir(ProdutoF produto) {
+	public void inserir(Produto produto) {
 		produtoRepository.save(produto);
 	}
 
 	@Override
-	public ProdutoF buscarPorId(String id) {
+	public Produto buscarPorId(String id) {
 		return produtoRepository.getOne(id);
 	}
 	@Override
-	public void deletarTodos(ProdutoF produto) {
+	public void deletarTodos(Produto produto) {
 		
 		/*for(Servico serv: produto.getServicos()){
 			servicoRepository.delete(serv);
@@ -39,12 +39,12 @@ public class ProdutoService implements IProdutoService{
 		
 	}
 	@Override
-	public List<ProdutoF> buscarTodos() {
+	public List<Produto> buscarTodos() {
 		return produtoRepository.findAll();
 	}
 	
 	@Override
-	public void deletar(ProdutoF produto) {
+	public void deletar(Produto produto) {
 		produtoRepository.delete(produto);
 	}
 	
@@ -55,7 +55,7 @@ public class ProdutoService implements IProdutoService{
 	}
 	
 	@Override
-	public void deleteAlertasProduto(ProdutoF produto) {
+	public void deleteAlertasProduto(Produto produto) {
 		//TODO criar esse método
 		
 		//dataFacade.getAlertaRepository().deleteByTipoAlerta(veiculo);
@@ -68,7 +68,7 @@ public class ProdutoService implements IProdutoService{
 	}
 
 	@Override
-	public MarcaModeloF buscarPorMarcaModelo(String marca, String modelo) {
+	public MarcaModelo buscarPorMarcaModelo(String marca, String modelo) {
 		// TODO Auto-generated method stub
 		return modeloRepository.buscarPorMarcaModelo(marca, modelo);
 	}

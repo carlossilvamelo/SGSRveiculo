@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.SGSRveiculo.frameworkPDS.models.ServicoF;
+import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.Oficina;
-import com.SGSRveiculo.models.Servico;
 import com.SGSRveiculo.models.Veiculo;
 import com.SGSRveiculo.services.OficinaService;
 import com.SGSRveiculo.services.VeiculoService;
@@ -45,7 +44,7 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/oficina");
 		
 		Oficina oficina = (Oficina) session.getAttribute("usuario");
-		List<ServicoF> listaServicos = servicoService.buscarServicosPorPrestadora(oficina);
+		List<Servico> listaServicos = servicoService.buscarServicosPorPrestadora(oficina);
 		mv.addObject("listaServicos",listaServicos);
 		
 		return mv;

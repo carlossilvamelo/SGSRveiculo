@@ -2,13 +2,13 @@ package com.SGSRveiculo.frameworkPDS.services;
 
 import java.util.List;
 
-import com.SGSRveiculo.frameworkPDS.models.CheckInF;
+import com.SGSRveiculo.frameworkPDS.models.CheckIn;
 
 
 public interface ICheckInService {
 
-	public void inserir(CheckInF checkIn);
+	public void inserir(CheckIn checkIn);
 
-	List<CheckInF> buscarCheckInPorId(Integer idServico);
+	List<CheckIn> buscarCheckInPorId(Integer idServico);
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class MarcaModeloF implements Serializable {
+public class MarcaModelo implements Serializable {
 
 
 	/**
@@ -25,9 +25,9 @@ public class MarcaModeloF implements Serializable {
 	private String marca;
 	private String modelo;
 	@OneToOne(mappedBy="marcaModelo", cascade=CascadeType.ALL)
-	private ProdutoF produto;
+	private Produto produto;
 
-	public MarcaModeloF(){
+	public MarcaModelo(){
 	}
 
 	public Long getId() {
@@ -54,11 +54,11 @@ public class MarcaModeloF implements Serializable {
 		this.modelo = modelo;
 	}
 	
-	public ProdutoF getProduto() {
+	public Produto getProduto() {
 		return produto;
 	}
 
-	public void setProduto(ProdutoF produto) {
+	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 	

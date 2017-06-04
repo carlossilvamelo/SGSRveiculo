@@ -17,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-public class CheckInF implements Serializable {
+public class CheckIn implements Serializable {
 
 	/**
 	 * 
@@ -34,12 +34,12 @@ public class CheckInF implements Serializable {
 	private String descricao;
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="id_acompanhamento")
-	private AcompanhamentoF acompanhamento;
+	private Acompanhamento acompanhamento;
 	
-	public CheckInF() {
+	public CheckIn() {
 	}
 	
-	public CheckInF(Integer id, Date dataHora, String acao) {
+	public CheckIn(Integer id, Date dataHora, String acao) {
 		this.id = id;
 		this.dataHora = dataHora;
 		this.acao = acao;

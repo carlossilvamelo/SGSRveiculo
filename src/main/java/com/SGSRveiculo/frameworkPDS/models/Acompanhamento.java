@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 
 @Entity
-public class AcompanhamentoF implements Serializable {
+public class Acompanhamento implements Serializable {
 
 	/**
 	 * 
@@ -28,28 +28,28 @@ public class AcompanhamentoF implements Serializable {
 	private String statusServico;
 	
 	@OneToMany(mappedBy="acompanhamento",fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	private List<CheckInF> checkIns;
+	private List<CheckIn> checkIns;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="id_servico")
-	private ServicoF servico;
+	private Servico servico;
 	private String observações;
 	
 	
 	
-	public ServicoF getServico() {
+	public Servico getServico() {
 		return servico;
 	}
 
-	public void setServico(ServicoF servico) {
+	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
 	
-	public List<CheckInF> getCheckIns() {
+	public List<CheckIn> getCheckIns() {
 		return checkIns;
 	}
 
-	public void setCheckIns(List<CheckInF> checkIns) {
+	public void setCheckIns(List<CheckIn> checkIns) {
 		this.checkIns = checkIns;
 	}
 

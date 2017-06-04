@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.SGSRveiculo.frameworkPDS.models.CheckInF;
+import com.SGSRveiculo.frameworkPDS.models.CheckIn;
+import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.Oficina;
-import com.SGSRveiculo.models.Servico;
 import com.SGSRveiculo.models.Veiculo;
 import com.SGSRveiculo.services.OficinaService;
 import com.SGSRveiculo.services.VeiculoService;
@@ -245,7 +245,7 @@ public class ServicoController {
 		ModelAndView mv = new ModelAndView("/servico/acompanhamento");	
 		
 		Servico servico =  (Servico) servicoService.buscarPorId(id);
-		List<CheckInF> lista = null;
+		List<CheckIn> lista = null;
 		
 		
 		

@@ -10,6 +10,6 @@ import com.SGSRveiculo.models.InfoExtraVeiculo;
 @Repository
 public interface InfoExtraVeiculoRepository extends JpaRepository<InfoExtraVeiculo, String>{
 	
-	@Query("SELECT i.kmTotal FROM InfoExtraVeiculo i WHERE i.id =:chassi")
-	Double getKmTotalVeiculo(@Param("chassi") String chassi);
+	@Query("SELECT i.kmTotal FROM InfoExtraVeiculo i WHERE i.id =:id_produto")
+	Double getKmTotalVeiculo(@Param("id_produto") String id_produto);
 }

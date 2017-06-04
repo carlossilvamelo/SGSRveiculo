@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class ProdutoF implements Serializable{
+public class Produto implements Serializable{
 
 	
 
@@ -24,10 +24,10 @@ public class ProdutoF implements Serializable{
 	private String nome;
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_marcaModelo")
-	private MarcaModeloF marcaModelo;
+	private MarcaModelo marcaModelo;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name="id_contratante")
-	private ContratanteF contratante;
+	private Contratante contratante;
 	
 	public String getId() {
 		return id;
@@ -41,16 +41,16 @@ public class ProdutoF implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public MarcaModeloF getMarcaModelo() {
+	public MarcaModelo getMarcaModelo() {
 		return marcaModelo;
 	}
-	public void setMarcaModelo(MarcaModeloF marcaModelo) {
+	public void setMarcaModelo(MarcaModelo marcaModelo) {
 		this.marcaModelo = marcaModelo;
 	}
-	public ContratanteF getContratante() {
+	public Contratante getContratante() {
 		return contratante;
 	}
-	public void setContratante(ContratanteF contratante) {
+	public void setContratante(Contratante contratante) {
 		this.contratante = contratante;
 	}
 

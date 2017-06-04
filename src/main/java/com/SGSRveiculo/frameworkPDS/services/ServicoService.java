@@ -4,11 +4,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.CheckInF;
-import com.SGSRveiculo.frameworkPDS.models.ContratanteF;
-import com.SGSRveiculo.frameworkPDS.models.PrestadoraF;
-import com.SGSRveiculo.frameworkPDS.models.ProdutoF;
-import com.SGSRveiculo.frameworkPDS.models.ServicoF;
+import com.SGSRveiculo.frameworkPDS.models.CheckIn;
+import com.SGSRveiculo.frameworkPDS.models.Contratante;
+import com.SGSRveiculo.frameworkPDS.models.Prestadora;
+import com.SGSRveiculo.frameworkPDS.models.Produto;
+import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.repository.CheckInRepository;
 import com.SGSRveiculo.frameworkPDS.repository.ServicoRepository;
 
@@ -30,50 +30,50 @@ public class ServicoService implements IServicoService{
 	 */
 	
 	@Override
-	public List<ServicoF> buscarServicosPorContratante(ContratanteF contratante) {
+	public List<Servico> buscarServicosPorContratante(Contratante contratante) {
 		return servicoRepository.listarServicoPorContratante(contratante);
 	}
 	
 	@Override
-	public List<ServicoF> buscarServicosPorPrestadora(PrestadoraF prestadora) {
+	public List<Servico> buscarServicosPorPrestadora(Prestadora prestadora) {
 		return servicoRepository.listarServicoPorPrestadora(prestadora);
 	}
 
 	@Override
-	public void inserir(ServicoF servico) {
+	public void inserir(Servico servico) {
 		servicoRepository.save(servico);
 	}
 
 	@Override
-	public void deletar(ServicoF servico) {
+	public void deletar(Servico servico) {
 		servicoRepository.delete(servico);
 	}
 	
 	
 
 	@Override
-	public ServicoF buscarPorId(Integer id) {
+	public Servico buscarPorId(Integer id) {
 		return servicoRepository.getOne(id);
 	}
 
 	@Override
-	public List<ServicoF> buscarTodos() {
+	public List<Servico> buscarTodos() {
 		return servicoRepository.findAll();
 	}
 
 
 	@Override
-	public List<ServicoF> buscarServicosPorIdContratante(String idCliente) {
+	public List<Servico> buscarServicosPorIdContratante(String idCliente) {
 		return null;
 	}
 	
 	@Override
-	public void atualizarProduto(ProdutoF produto) {
+	public void atualizarProduto(Produto produto) {
 		servicoRepository.updateProduto(produto);
 	}
 
 	@Override
-	public List<CheckInF> listarCheckIn(Integer id) {
+	public List<CheckIn> listarCheckIn(Integer id) {
 		// TODO Auto-generated method stub
 		return checkInRepository.listarCheckInPorServico(id);
 	}
@@ -93,7 +93,7 @@ public class ServicoService implements IServicoService{
 	}
 
 	@Override
-	public void deletarTodos(ProdutoF produto) {
+	public void deletarTodos(Produto produto) {
 		// TODO Auto-generated method stub
 		
 	}

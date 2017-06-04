@@ -9,7 +9,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class EnderecoF implements Serializable{
+public class Endereco implements Serializable{
 	
 	
 	/**
@@ -24,7 +24,7 @@ public class EnderecoF implements Serializable{
 	private int numero;
 	
 	
-	public EnderecoF() {
+	public Endereco() {
 		// TODO Auto-generated constructor stub
 	}
 	

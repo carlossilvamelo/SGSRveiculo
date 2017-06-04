@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.PecaF;
+import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.repository.PecaRepository;
 
 
@@ -16,22 +16,22 @@ public class PecaServiceF implements IPecaService{
 	private PecaRepository pecaRepository;
 	
 	@Override
-	public void inserir(PecaF peca) {
+	public void inserir(Peca peca) {
 		pecaRepository.save(peca);
 	}
 
 	@Override
-	public void deletar(PecaF peca) {
+	public void deletar(Peca peca) {
 		pecaRepository.delete(peca);
 	}
 
 	@Override
-	public List<PecaF> buscarTodos() {
+	public List<Peca> buscarTodos() {
 		return pecaRepository.findAll();
 	}
 
 	@Override
-	public PecaF buscarPorId(Long id) {
+	public Peca buscarPorId(Long id) {
 		return pecaRepository.getOne(id);
 	}
 

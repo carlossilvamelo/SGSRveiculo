@@ -1,5 +1,7 @@
 package com.SGSRveiculo.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SGSRveiculo.enumeracoes.EnumMarcasModelos;
+import com.SGSRveiculo.frameworkPDS.models.CheckIn;
+import com.SGSRveiculo.frameworkPDS.models.MarcaModelo;
 import com.SGSRveiculo.frameworkPDS.repository.MarcaModeloRepository;
+import com.SGSRveiculo.frameworkPDS.services.CheckInService;
 import com.SGSRveiculo.models.Cliente;
 import com.SGSRveiculo.models.Oficina;
 import com.SGSRveiculo.services.ClienteService;
 import com.SGSRveiculo.services.OficinaService;
+
 
 @Controller
 @RequestMapping("/")
@@ -26,13 +33,15 @@ public class HomeController {
 	@Autowired
 	private ClienteService clienteService;
 	@Autowired
+	private CheckInService checkInService;
+	@Autowired
 	private OficinaService oficinaService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(){
 		
 		ModelAndView mv = new ModelAndView("index");
-		/*
+		
 		ArrayList<CheckIn> lista = (ArrayList<CheckIn>) checkInService.buscarCheckInPorId(321321);
 		for (CheckIn checkIn : lista) {
 			System.out.println(checkIn.getDataHora()+"  "+checkIn.getAcao());
@@ -50,7 +59,7 @@ public class HomeController {
 				}
 			}
 		}
-		*/
+		
         return mv;
 	}
 	
@@ -59,6 +68,8 @@ public class HomeController {
 	public ModelAndView login(String login, String senha){
 		
 		ModelAndView mv = new ModelAndView("login");
+		
+		
 		
 		return mv;
 	}
@@ -79,6 +90,7 @@ public class HomeController {
 		Cliente cliente = (Cliente) clienteService.buscarPorId(login);
 		
 		if(cliente != null){
+			System.out.println("cliente");
 			attributes.addFlashAttribute("message","Bem Vindo " + cliente.getNome());
 			attributes.addFlashAttribute("cliente", cliente);
 			session.setAttribute("usuario", cliente);
@@ -100,7 +112,7 @@ public class HomeController {
 			}
 		}
 		
-		return null;
+		return mv;
 	}
 	
 	

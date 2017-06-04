@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.OrcamentoF;
+import com.SGSRveiculo.frameworkPDS.models.Orcamento;
 import com.SGSRveiculo.frameworkPDS.repository.OrcamentoRepository;
 
 
@@ -21,22 +21,22 @@ public class OrcamentoService implements IOrcamentoService{
 	
 	// acesso banco de dados
 	@Override
-	public void inserir(OrcamentoF orcamento) {
+	public void inserir(Orcamento orcamento) {
 		orcamentoRepository.save(orcamento);
 	}
 
 	@Override
-	public void deletar(OrcamentoF orcamento) {
+	public void deletar(Orcamento orcamento) {
 		orcamentoRepository.delete(orcamento);
 	}
 
 	@Override
-	public OrcamentoF buscarPorId(Long id) {
+	public Orcamento buscarPorId(Long id) {
 		return orcamentoRepository.getOne(id);
 	}
 
 	@Override
-	public List<OrcamentoF> buscarTodos() {
+	public List<Orcamento> buscarTodos() {
 		return orcamentoRepository.findAll();
 	}
 

@@ -16,7 +16,7 @@
 
 		$(document).ready(function(){
 
-			var id = $("#chassi").html();
+			var id = $("#").html();
 			if(id == null){
 
 				$("#messagePanel").removeAttr("hidden");
@@ -33,7 +33,7 @@
 
 			$("#remove").click(function(){
 
-				var id = $("#chassi").html();
+				var id = $("#id").html();
 				
 				$.ajax({
 					type: 'POST',
@@ -91,12 +91,12 @@
 						</thead>
 						<tbody>
 							<tr th:each="veiculo : ${cliente.veiculo}">
-								<td ><span id="chassi" th:text="${veiculo.numeroChassi}"></span></td>
+								<td ><span id="chassi" th:text="${veiculo.id}"></span></td>
 								<td th:text="${veiculo.placa}"></td>
 								<td th:text="#{|enumCores.${veiculo.cor}|}"></td>
 								<td th:if="${veiculo.marcaModelo != null}" ><span th:text="${veiculo.marcaModelo.marca}"></span></td>
 								<td th:if="${veiculo.marcaModelo != null}" ><span th:text="${veiculo.marcaModelo.modelo}"></span></td>
-								<td><a th:href="@{addInfoExtraVeiculo(id=${veiculo.numeroChassi})}">Adicionar Informações Extras</a></td>
+								<td><a th:href="@{addInfoExtraVeiculo(id=${veiculo.id})}">Adicionar Informações Extras</a></td>
 								<td><button title="REMOVER" id="remove" class="btn btn-danger btn-xs"><label class="glyphicon glyphicon-trash"></label></button></td>
 								
 							</tr>

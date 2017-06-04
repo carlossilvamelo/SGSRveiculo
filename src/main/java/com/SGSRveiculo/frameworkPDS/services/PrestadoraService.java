@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.PrestadoraF;
+import com.SGSRveiculo.frameworkPDS.models.Prestadora;
 import com.SGSRveiculo.frameworkPDS.repository.PrestadoraRepository;
 
 
@@ -18,22 +18,22 @@ public class PrestadoraService implements IPrestadoraService{
 	//private LogicaAcompanhamento logicaAcompanhamento;
 	
 	@Override
-	public void inserir(PrestadoraF prestadora) {
+	public void inserir(Prestadora prestadora) {
 		prestadoraRepository.save(prestadora);
 	}
 
 	@Override
-	public void deletar(PrestadoraF prestadora) {
+	public void deletar(Prestadora prestadora) {
 		prestadoraRepository.delete(prestadora);
 	}
 
 	@Override
-	public PrestadoraF buscarPorId(String id) {
+	public Prestadora buscarPorId(String id) {
 		return prestadoraRepository.findOne(id);
 	}
 
 	@Override
-	public List<PrestadoraF> buscarTodos() {
+	public List<Prestadora> buscarTodos() {
 		return prestadoraRepository.findAll();
 	}
 

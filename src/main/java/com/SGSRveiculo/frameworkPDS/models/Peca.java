@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class PecaF implements Serializable{
+public class Peca implements Serializable{
 
 	/**
 	 * 
@@ -28,7 +28,7 @@ public class PecaF implements Serializable{
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="id_orcamento")
-	private OrcamentoF orcamento;
+	private Orcamento orcamento;
 	
 	
 	public String getNome() {
@@ -56,10 +56,10 @@ public class PecaF implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public OrcamentoF getOrcamento() {
+	public Orcamento getOrcamento() {
 		return orcamento;
 	}
-	public void setOrcamento(OrcamentoF orcamento) {
+	public void setOrcamento(Orcamento orcamento) {
 		this.orcamento = orcamento;
 	}
 	public void setPreco(Double preco) {

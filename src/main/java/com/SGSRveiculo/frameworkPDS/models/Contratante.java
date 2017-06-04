@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat; 
 
 @Entity
-public class ContratanteF implements Serializable{
+public class Contratante implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
@@ -29,21 +29,21 @@ public class ContratanteF implements Serializable{
 	private String sexo;
 
 	@OneToMany(mappedBy="contratante", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	private List<ProdutoF> produto;
+	private List<Produto> produto;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	private EnderecoF endereco;
+	private Endereco endereco;
 	
 	@DateTimeFormat(pattern="dd/mm/yyyy")
 	private Calendar dataNascimento;
 
 	@OneToMany(mappedBy="contratante", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	private List<ServicoF> servicos = new ArrayList<ServicoF>();
+	private List<Servico> servicos = new ArrayList<Servico>();
 	
 	
 	
 
-	public ContratanteF(){};
+	public Contratante(){};
 	
 	
 	public String getTelefone() {
@@ -72,23 +72,23 @@ public class ContratanteF implements Serializable{
 	}
 	
 
-	public List<ServicoF> getServicos() {
+	public List<Servico> getServicos() {
 		return servicos;
 	}
 
 
-	public void setServicos(List<ServicoF> servicos) {
+	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
 	
-	public void adicionarServico(ServicoF servico) {
+	public void adicionarServico(Servico servico) {
 		this.servicos.add(servico);
 	}
 
-	public EnderecoF getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(EnderecoF endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 	public String getSexo() {
@@ -104,13 +104,13 @@ public class ContratanteF implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public List<ServicoF> getServico() {
+	public List<Servico> getServico() {
 		return servicos;
 	}
 	public void setServico() {
-		this.servicos = new ArrayList<ServicoF>();
+		this.servicos = new ArrayList<Servico>();
 	}
-	public void addServico(ServicoF servico){
+	public void addServico(Servico servico){
 		this.servicos.add(servico);
 	}
 
@@ -125,13 +125,13 @@ public class ContratanteF implements Serializable{
 	}
 
 
-	public List<ProdutoF> getProduto() {
+	public List<Produto> getProduto() {
 		return produto;
 	}
 	public void setProduto() {
-		this.produto = new ArrayList<ProdutoF>();
+		this.produto = new ArrayList<Produto>();
 	}
-	public void addProduto(ProdutoF produto){
+	public void addProduto(Produto produto){
 		this.produto.add(produto);
 	}
 	

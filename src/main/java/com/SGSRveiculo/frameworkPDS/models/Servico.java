@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-public class ServicoF implements Serializable{
+public class Servico implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
@@ -35,11 +35,11 @@ public class ServicoF implements Serializable{
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_acompanhamento")
-	private AcompanhamentoF acompanhamento;
+	private Acompanhamento acompanhamento;
 
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_MarcaModelo")
-	private MarcaModeloF marcaModelo;
+	private MarcaModelo marcaModelo;
 	
 	@DateTimeFormat(pattern="dd/mm/yyyy")
 	private Date dataRequerimento;
@@ -49,25 +49,25 @@ public class ServicoF implements Serializable{
 
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name="id_prestadora")
-	private PrestadoraF prestadora;
+	private Prestadora prestadora;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name="id_contratante")
-	private ContratanteF contratante;
+	private Contratante contratante;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="id_produto")
-	private ProdutoF produto;
+	private Produto produto;
 	
 	private String notaFiscal;
 	
 	@OneToMany(mappedBy="servico",fetch=FetchType.LAZY, cascade={CascadeType.REMOVE, CascadeType.PERSIST})
-	private List<OrcamentoF> orcamentos;
+	private List<Orcamento> orcamentos;
 
 	private String descricao;
 	private String obs;
 	
-	public ServicoF() {	}
+	public Servico() {	}
 	
 	public Integer getId() {
 		return id;
@@ -77,11 +77,11 @@ public class ServicoF implements Serializable{
 		this.id = id;
 	}
 
-	public AcompanhamentoF getAcompanhamento() {
+	public Acompanhamento getAcompanhamento() {
 		return acompanhamento;
 	}
 
-	public void setAcompanhamento(AcompanhamentoF acompanhamento) {
+	public void setAcompanhamento(Acompanhamento acompanhamento) {
 		this.acompanhamento = acompanhamento;
 	}
 
@@ -101,27 +101,27 @@ public class ServicoF implements Serializable{
 		this.prazoFinal = prazoFinal;
 	}
 
-	public PrestadoraF getPrestadora() {
+	public Prestadora getPrestadora() {
 		return prestadora;
 	}
 
-	public void setPrestadora(PrestadoraF prestadora) {
+	public void setPrestadora(Prestadora prestadora) {
 		this.prestadora = prestadora;
 	}
 
-	public ContratanteF getContratante() {
+	public Contratante getContratante() {
 		return contratante;
 	}
 
-	public void setContratante(ContratanteF contratante) {
+	public void setContratante(Contratante contratante) {
 		this.contratante = contratante;
 	}
 
-	public ProdutoF getProduto() {
+	public Produto getProduto() {
 		return produto;
 	}
 
-	public void setProduto(ProdutoF produto) {
+	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 

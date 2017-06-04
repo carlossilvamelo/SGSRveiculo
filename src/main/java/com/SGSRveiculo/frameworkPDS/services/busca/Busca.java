@@ -5,20 +5,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.SGSRveiculo.frameworkPDS.models.PecaF;
+import com.SGSRveiculo.frameworkPDS.models.Peca;
 
 @Component
 public abstract class Busca {
 
-	private List<PecaF> pecas;
+	private List<Peca> pecas;
 
 	public Busca(){
 		
-		pecas = new ArrayList<PecaF>();
+		pecas = new ArrayList<Peca>();
 	}
 	
 	
-	private final List<PecaF> menorPreco(List<PecaF> listaPecas){
+	private final List<Peca> menorPreco(List<Peca> listaPecas){
 		
 		listaPecas.stream()
 		.filter((p)-> p.getPreco() != null)
@@ -30,19 +30,19 @@ public abstract class Busca {
 	
 
 	
-	public final List<PecaF> buscarPecaMaisAvaliado(String idValor, String idProduto) {
+	public final List<Peca> buscarPecaMaisAvaliado(String idValor, String idProduto) {
 
 		return maisAvaliado(buscaPeca());
 	}
 	
 	
-	public final List<PecaF> buscarPecaMenorPreco(String idValor, String idProduto){
+	public final List<Peca> buscarPecaMenorPreco(String idValor, String idProduto){
 
 		return menorPreco(buscaPeca());
 	}
 
 
-	private final List<PecaF> maisAvaliado(List<PecaF> listaPecas) {
+	private final List<Peca> maisAvaliado(List<Peca> listaPecas) {
 		
 		listaPecas.stream()
 		.filter((p)-> p.getAvaliacao() != null)
@@ -52,7 +52,7 @@ public abstract class Busca {
 	}
 
 	
-	public List<PecaF> buscaPeca(){
+	public List<Peca> buscaPeca(){
 		
 		return pecas;	
 	}

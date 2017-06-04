@@ -2,14 +2,18 @@ package com.SGSRveiculo.models;
 
 import javax.persistence.Entity;
 
-import com.SGSRveiculo.frameworkPDS.models.ProdutoF;
+import com.SGSRveiculo.frameworkPDS.models.Produto;
 
 
 
 @Entity
-public class Veiculo extends ProdutoF{
-	private String placa;
+public class Veiculo extends Produto{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
+	private String placa;
 	private Integer ano;
 	//private EnumCores cor;
 	private Integer cambio;

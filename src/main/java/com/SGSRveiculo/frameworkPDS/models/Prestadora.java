@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class PrestadoraF implements Serializable{
+public class Prestadora implements Serializable{
 	
 
 	private static final long serialVersionUID = 1L;
@@ -26,12 +26,12 @@ public class PrestadoraF implements Serializable{
 	private String telefoneAlt;
 	private String email;
 	@OneToOne
-	private EnderecoF endereco;
+	private Endereco endereco;
 	
 	@OneToMany(mappedBy="prestadora", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<ServicoF> servicos;
+	private List<Servico> servicos;
 	
-	public PrestadoraF(){}
+	public Prestadora(){}
 	
 	public String getId() {
 		return id;
@@ -63,20 +63,20 @@ public class PrestadoraF implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public EnderecoF getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(EnderecoF endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 	
-	public List<ServicoF> getServicos() {
+	public List<Servico> getServicos() {
 		return servicos;
 	}
 	public void setServicos() {
-		this.servicos = new ArrayList<ServicoF>();
+		this.servicos = new ArrayList<Servico>();
 	}
-	public void addServico(ServicoF servico){
+	public void addServico(Servico servico){
 		setServicos();
 		this.servicos.add(servico);
 	}
