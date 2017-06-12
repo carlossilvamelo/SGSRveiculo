@@ -11,8 +11,6 @@ import com.SGSRveiculo.frameworkPDS.models.Peca;
 public abstract class ContadorServico {
 	
 	
-	
-	
 	public final Double contabilizarServiço(Orcamento orcamento) {
 		Double valor= 0.0;
 		valor += orcamento.getPrecoMaoObra();
@@ -21,26 +19,29 @@ public abstract class ContadorServico {
 		for (Peca peca : pecas) {
 			valor += peca.getPreco();
 		}
-		valor -= addDescontoValor(orcamento);
-		valor += valorAdicional(orcamento);
+		valor -= orcamento.getDescontoValor();
+		valor += orcamento.getValorAdicional();
+		valor = taxasSobreValor(valor);
 		valor = addDescontoPorcentagem(valor, orcamento);
 		return valor;
 	}
 
 	
-	public Double addDescontoValor(Orcamento orcamento) {
-		
-		return orcamento.getDescontoValor();
-	}
 	
-	public Double addDescontoPorcentagem(Double valor, Orcamento orcamento) {
-		return valor * (1-(orcamento.getDescontoPorcentagem()/100));
-	}
+	/**
+	 * Para não adiconar taxas ou descontos basta apenas retornar o valor
+	 * @param valor
+	 * @param orcamento
+	 * @return
+	 */
+	public abstract Double addDescontoPorcentagem(Double valor, Orcamento orcamento);
 
-	public Double valorAdicional(Orcamento orcamento) {
-		// TODO Auto-generated method stub
-		return orcamento.getValorAdicional();
-	}
+	/**
+	 * Para não adiconar taxas ou descontos basta apenas retornar o valor
+	 * @param valor
+	 * @return
+	 */
+	public abstract Double taxasSobreValor(Double valor);
 	
 	public abstract Double contabilizarValorProprio(Orcamento orcamento);
 
