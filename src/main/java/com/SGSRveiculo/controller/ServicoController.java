@@ -74,7 +74,7 @@ public class ServicoController {
 
 		
 		StatusServico status = new PreDiagnostico();//status inicial
-		servico.setStatus(status.getNome());
+		servico.setStatus(status.getNomeStatus());
 		
 		System.out.println("Veiculo: " + servico.getProduto().getId());
 		servico.setPrestadora(oficinaService.buscarPorId(servico.getPrestadora().getId()));
