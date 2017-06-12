@@ -73,11 +73,11 @@ public class ServicoController {
 		Cliente tmp = (Cliente) session.getAttribute("usuario");
 		Cliente cliente = (Cliente) clienteService.buscarPorId(tmp.getId());
 
-		
 		servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
 		servico.setOficina(oficinaService.buscarPorId(servico.getOficina().getId()));
 		servico.setVeiculo(veiculoService.buscarPorId(servico.getVeiculo().getId()));
 		servico.setCliente(cliente);
+
 		
 		cliente.addServico(servico);
 		
