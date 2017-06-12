@@ -12,13 +12,26 @@
 	<title>Novo Cliente</title>
 	<style type="text/css">
 	
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+			var msg = $("#message").html();
+			if(msg == null){
+
+				$("#messagePanel").removeAttr("hidden");
+			}
+		});
+
+		
+	</script>
+	
 	.divAlert{
 		border-left:10px solid red;
 		padding:10px;
 		margin-bottom: 5px;
 	}
 	</style>
-	
 	
 </head>
 <body>
@@ -33,20 +46,15 @@
 		<div class="divAlert"> Você digitou um CPF invalido!</div>
 	</div>
 	
+	<div id="messagePanel" hidden="true" class="alert alert-warning alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <strong><span id="message" th:text="${message}"></span></strong>
+	</div>
+	
 	
 	<h1>Novo Cliente <span class="glyphicon glyphicon-plus"></span></h1>
 	<div class="">
 		<form th:action="@{/cliente/novo}" th:object="${cliente}" method="post">
-			
-			<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<th:block th:each="error : ${#fields.detailedErrors()}">
-					<div>
-						<i class="fa  fa-exclamation-circle"></i>
-						<span th:text="${error.message}"></span>
-					</div>
-				</th:block>
-			</div>
 			
 			<div class="form-group">
 				<label >Nome:</label>

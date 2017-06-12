@@ -1,5 +1,7 @@
 package com.SGSRveiculo.enumeracoes;
+
 public enum EnumStatus {
+	
 	PRE_DIAGNOSTICO("Pré-diagnostico"),//status 0
 	VISTORIA_PENDENTE("Vistoria pendente"),//status 1 
 	AUTORIZACAO_PENDENTE("Autorizacao pendente"),//status 2 

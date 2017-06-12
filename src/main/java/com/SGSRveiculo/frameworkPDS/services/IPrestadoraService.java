@@ -2,12 +2,12 @@ package com.SGSRveiculo.frameworkPDS.services;
 
 import java.util.List;
 
-import com.SGSRveiculo.frameworkPDS.models.Prestadora;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
 
 
 public interface IPrestadoraService {
-	public Prestadora buscarPorId(String id);
-	public void inserir(Prestadora prestadora);
-	public void deletar(Prestadora prestadora);
-	public List<Prestadora> buscarTodos();
+	public Oficina buscarPorId(String id);
+	public void inserir(Oficina prestadora);
+	public void deletar(Oficina prestadora);
+	public List<Oficina> buscarTodos();
 }

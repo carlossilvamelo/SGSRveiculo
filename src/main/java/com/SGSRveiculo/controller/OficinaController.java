@@ -1,5 +1,6 @@
 package com.SGSRveiculo.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,30 +14,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
+import com.SGSRveiculo.frameworkPDS.models.Orcamento;
+import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
-import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
+import com.SGSRveiculo.frameworkPDS.models.Veiculo;
+import com.SGSRveiculo.frameworkPDS.services.ClienteService;
+import com.SGSRveiculo.frameworkPDS.services.OficinaService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
-import com.SGSRveiculo.models.Cliente;
-import com.SGSRveiculo.models.Oficina;
-import com.SGSRveiculo.models.Veiculo;
-import com.SGSRveiculo.services.OficinaService;
-import com.SGSRveiculo.services.VeiculoService;
+import com.SGSRveiculo.frameworkPDS.services.VeiculoService;
+import com.SGSRveiculo.services.ListaPecas;
+import com.SGSRveiculo.services.PecaService;
 
 
 @Controller
 @RequestMapping("/oficina")
+@RequestScope
 public class OficinaController {
+	
 	@Autowired
-	private ContratanteService clienteService;
+	private ClienteService clienteService;
 	@Autowired
 	private OficinaService oficinaService;
 	@Autowired
 	private VeiculoService veiculoService;
 	@Autowired
 	private ServicoService servicoService; 
+	@Autowired
+	private PecaService pecaService;
+	@Autowired
+	private ListaPecas pecas;
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -44,7 +56,7 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/oficina");
 		
 		Oficina oficina = (Oficina) session.getAttribute("usuario");
-		List<Servico> listaServicos = servicoService.buscarServicosPorPrestadora(oficina);
+		List<Servico> listaServicos = servicoService.buscarServicosPorOficina(oficina);
 		mv.addObject("listaServicos",listaServicos);
 		
 		return mv;
@@ -61,9 +73,11 @@ public class OficinaController {
 	
 	@PostMapping("/cadastro")
 	public ModelAndView cadastroOficina(Oficina oficina, RedirectAttributes attributes){
+		
 		ModelAndView mv = new ModelAndView("redirect:/oficina/cadastro");
 		oficinaService.inserir(oficina);
 		mv.addObject("oficina", oficina);
+		
 		attributes.addFlashAttribute("message", "Oficina cadastrada com sucesso!");	
 		return mv;
 	}
@@ -74,20 +88,23 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/todosServicos");
 		//descer para a camada de validação
 		Oficina temp = (Oficina) session.getAttribute("usuario");
-		Oficina oficina = (Oficina)oficinaService.buscarPorId(temp.getId());
+		Oficina oficina = oficinaService.buscarPorId(temp.getId());
 		return mv;
 	}
 	
-	@GetMapping("/novoServico")
+	@GetMapping("/novoServicoOficina")
 	public ModelAndView cadastrarServico(HttpSession session){
-		ModelAndView mv = new ModelAndView("oficina/novoServico");
+		ModelAndView mv = new ModelAndView("servico/formServicoOficina");
 		
 		return mv;
 	}
 	
-	@PostMapping("/novoServico")
+	@PostMapping("/novoServicoOficina")
 	public ModelAndView cadastrarServico(Servico servico){
-		ModelAndView mv = new ModelAndView("oficina/novoServico");
+		
+		ModelAndView mv = new ModelAndView("redirect:/oficina/");
+		
+		servicoService.inserir(servico);
 		
 		return mv;
 	}
@@ -108,7 +125,7 @@ public class OficinaController {
 	}
 	
 	@GetMapping("/listarModelos" )
-	public  @ResponseBody List<String> listarModelos( String marca){
+	public  @ResponseBody List<String> listarModelos(String marca){
 		
 		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
 		
@@ -151,4 +168,89 @@ public class OficinaController {
 		return mv;
 	}
 	
+	
+	@GetMapping("/addPeca")
+	public @ResponseBody Collection<Peca> addPeca(Long idPeca){
+		
+		Peca peca = pecaService.buscarPorId(idPeca);
+		//objeto que irá armazenar as peças que vão sendo inseridas para gerar o orçamento
+		pecas.add(peca);
+		
+		return pecas.getPecas();
+	}
+	
+	
+	@GetMapping("/gerarOrcamento")
+	public ModelAndView acessarOrcamento(HttpSession session,@RequestParam(name="id", required=true) Integer idServico){
+		
+		ModelAndView mv = new ModelAndView("/oficina/gerarOrcamento");
+		
+		mv.addObject("servico", servicoService.buscarPorId(idServico));
+		mv.addObject("listaPeca", pecaService.listarPecas());
+		
+		return mv;
+		
+	}
+	
+	@PostMapping("/gerarOrcamento")
+	public ModelAndView gerarOrcamento(@RequestParam(name="id", required=true)Integer idServico){
+		
+		ModelAndView mv = new ModelAndView("redirect:/oficina");
+		
+		Orcamento orcamento = new Orcamento();
+		Servico servico = servicoService.buscarPorId(idServico);
+		String msg = "";
+		orcamento.setServico(servico);
+		
+		oficinaService.gerarOrcamento(pecas.getPecas());
+		
+		for(Peca peca: pecas.getPecas()){
+			
+			System.out.println(peca.getNome() + " para o serviço "+ servico.getDescricao());
+		}
+		
+		servico.setOrcamentos();
+		servico.addOrcamentos(orcamento);
+		
+		if(servico.getOrcamentos().isEmpty()){
+			msg += "Não foi possível criar o orçamento";
+		}
+		msg += "O orçamento foi registrado com sucesso";
+		
+		mv.addObject("servico", servicoService.buscarPorId(idServico));
+		mv.addObject("listaPeca", pecaService.listarPecas());
+		mv.addObject("orcamento", new Orcamento());
+		mv.addObject("msg", msg);
+		
+		pecas.limpar();
+		return mv;
+		
+	}
+	
+	@GetMapping("/estoque")
+	public ModelAndView buscarPeca(){
+		
+		ModelAndView mv = new ModelAndView("/oficina/estoque");
+		
+		mv.addObject("listaPeca", pecaService.listarPecas());
+		
+		return mv;
+		
+	}
+	
+	@GetMapping("/cadastrarPecasSite")
+	public ModelAndView cadastrarPecasSite(Integer site, String peca){
+		
+		ModelAndView mv = new ModelAndView("redirect:/oficina/estoque");
+		
+		if(site == 1){
+			
+			oficinaService.cadastrarPecasSite("http://www.triseteparts.com.br/busca/?q=", peca);
+		}
+		
+		
+		return mv;
+		
+	}
+
 }

@@ -52,6 +52,8 @@
                   <th>Veículo</th>
                   <th>Descrição</th>
            		  <th>Status</th>
+           		  <th>&nbsp;</th>
+           		  <th>&nbsp;</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -65,9 +67,11 @@
                   <td th:text="${lista.veiculo.placa}"></td>
                   <td th:text="${lista.descricao}" ></td>
                   <td th:text="#{|enumStatus.${lista.status}|}"></td>
+                  <td><a th:href="@{../oficina/gerarOrcamento(id=${lista.id})}">Gerar Orçamento</a></td>
+                  <td><a th:href="@{../oficina/estoque}">Cadastrar peças estoque</a></td>
                   
                   <td>
-	                  <div  th:if="${lista.status.name() == 'PRE_DIAGNOSTICO'}">	
+	                  <div  th:if="${lista.status == 'PRE_DIAGNOSTICO'}">	
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/vistoriaPendente(id=${lista.id})}"> Vistoria pendente</a>
 	                  </div>
 	                  

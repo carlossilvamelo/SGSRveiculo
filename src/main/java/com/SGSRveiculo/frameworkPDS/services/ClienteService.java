@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.Contratante;
-import com.SGSRveiculo.frameworkPDS.repository.ContratanteRepository;
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
+import com.SGSRveiculo.frameworkPDS.repository.ClienteRepository;
 
 @Service
-public class ContratanteService implements IContratanteService{
+public class ClienteService implements IContratanteService{
 
 	@Autowired
-	private ContratanteRepository contratanteRepository;
+	private ClienteRepository clienteRepository;
 	
 	//@Autowired
 	//private LogicaAcompanhamento logicaAcompanhamento;
@@ -25,10 +25,10 @@ public class ContratanteService implements IContratanteService{
 	}
 	
 	@Override
-	public Contratante buscarPorId(String id) {
-		Contratante contratante = null;
+	public Cliente buscarPorId(String id) {
+		Cliente contratante = null;
 		try {
-			contratante = contratanteRepository.findOne(id);
+			contratante = clienteRepository.findOne(id);
 		} catch (DataAccessException e) {
 			System.err.println("Erro na camada de dados!");	
 			e.printStackTrace();
@@ -37,18 +37,18 @@ public class ContratanteService implements IContratanteService{
 	}
 	
 	@Override
-	public void inserir(Contratante contratante) {
+	public void inserir(Cliente cliente) {
 		try {
-			contratanteRepository.save(contratante);
+			clienteRepository.save(cliente);
 		} catch (DataAccessException e) {
 			System.err.println("Erro na camada de dados!");	
 			e.printStackTrace();
 		}
 	}
 	@Override
-	public void deletar(Contratante contratante) {
+	public void deletar(Cliente contratante) {
 		try {
-			contratanteRepository.delete(contratante);
+			clienteRepository.delete(contratante);
 		} catch (DataAccessException e) {
 			System.err.println("Erro na camada de dados!");	
 			e.printStackTrace();
@@ -57,10 +57,10 @@ public class ContratanteService implements IContratanteService{
 
 
 	@Override
-	public List<Contratante> buscarTodos() {
-		List<Contratante> contratantes = null;
+	public List<Cliente> buscarTodos() {
+		List<Cliente> contratantes = null;
 		try {
-			contratantes = contratanteRepository.findAll();
+			contratantes = clienteRepository.findAll();
 		} catch (DataAccessException e) {
 			System.err.println("Erro na camada de dados!");	
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class ContratanteService implements IContratanteService{
 	}
 
 	@Override
-	public Contratante buscarID(String id) {
+	public Cliente buscarID(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

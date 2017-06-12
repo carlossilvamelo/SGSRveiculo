@@ -17,9 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.SGSRveiculo.enumeracoes.EnumStatus;
 
 
 @Entity
@@ -41,7 +41,7 @@ public class Servico implements Serializable{
 	@JoinColumn(name="id_MarcaModelo")
 	private MarcaModelo marcaModelo;
 	
-	private String status;
+	private EnumStatus status;
 	
 	@DateTimeFormat(pattern="dd/mm/yyyy")
 	private Date dataRequerimento;
@@ -50,16 +50,16 @@ public class Servico implements Serializable{
 	private Calendar prazoFinal;
 
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	@JoinColumn(name="id_prestadora")
-	private Prestadora prestadora;
+	@JoinColumn(name="id_oficina")
+	private Oficina oficina;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	@JoinColumn(name="id_contratante")
-	private Contratante contratante;
+	@JoinColumn(name="id_cliente")
+	private Cliente cliente;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
-	@JoinColumn(name="id_produto")
-	private Produto produto;
+	@JoinColumn(name="id_veiculo")
+	private Veiculo veiculo;
 	
 	private String notaFiscal;
 	
@@ -103,28 +103,28 @@ public class Servico implements Serializable{
 		this.prazoFinal = prazoFinal;
 	}
 
-	public Prestadora getPrestadora() {
-		return prestadora;
+	public Oficina getOficina() {
+		return oficina;
 	}
 
-	public void setPrestadora(Prestadora prestadora) {
-		this.prestadora = prestadora;
+	public void setOficina(Oficina oficina) {
+		this.oficina = oficina;
 	}
 
-	public Contratante getContratante() {
-		return contratante;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setContratante(Contratante contratante) {
-		this.contratante = contratante;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public Produto getProduto() {
-		return produto;
+	public Veiculo getVeiculo() {
+		return veiculo;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
 	}
 
 	public String getNotaFiscal() {
@@ -135,13 +135,15 @@ public class Servico implements Serializable{
 		this.notaFiscal = notaFiscal;
 	}
 
-	/*public List<Orcamento> getOrcamentos() {
+	public List<Orcamento> getOrcamentos() {
 		return orcamentos;
 	}
-
-	public void setOrcamentos(List<Orcamento> orcamentos) {
-		this.orcamentos = orcamentos;
-	}*/
+	public void setOrcamentos() {
+		this.orcamentos = new ArrayList<Orcamento>();
+	}
+	public void addOrcamentos(Orcamento orcamentos) {
+		this.orcamentos.add(orcamentos);
+	}
 
 	public String getDescricao() {
 		return descricao;
@@ -159,14 +161,12 @@ public class Servico implements Serializable{
 		this.obs = obs;
 	}
 
-	public String getStatus() {
+	public EnumStatus getStatus() {
 		return status;
 	}
-
-	public void setStatus(String status) {
+	public void setStatus(EnumStatus status) {
 		this.status = status;
 	}
-	
 	
 	
 }

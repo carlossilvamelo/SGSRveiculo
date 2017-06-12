@@ -76,11 +76,11 @@
                   <td th:if="${lista.oficina != null}" th:text="${lista.oficina.nome}"></td>
                   <td th:text="${lista.veiculo.placa}"></td>
                   <td th:text="${lista.descricao}" ></td>
-                  <td th:text="#{|enumStatus.${lista.status}|}"></td>
+                  <td th:if="${lista.status.name() != null}"  th:text="#{|enumStatus.${lista.status.name()}|}"></td>
                   
                   <td>
                   	  <label th:text="${lista.status.name()}"></label>
-	                  <div  th:if="${lista.status.name() == 'AUTORIZACAO_PENDENTE'}">	
+	                  <div  th:if="${lista.status == 'AUTORIZACAO_PENDENTE'}">	
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aprovarServico(id=${lista.id})}"> Aprovar serviço</a>
 	                  </div>
 	  

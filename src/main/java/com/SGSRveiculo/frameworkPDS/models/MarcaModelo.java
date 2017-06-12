@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -25,7 +27,7 @@ public class MarcaModelo implements Serializable {
 	private String marca;
 	private String modelo;
 	@OneToOne(mappedBy="marcaModelo", cascade=CascadeType.ALL)
-	private Produto produto;
+	private Veiculo veiculo;
 
 	public MarcaModelo(){
 	}
@@ -54,12 +56,12 @@ public class MarcaModelo implements Serializable {
 		this.modelo = modelo;
 	}
 	
-	public Produto getProduto() {
-		return produto;
+	public Veiculo getProduto() {
+		return veiculo;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setProduto(Veiculo veiculo) {
+		this.veiculo = veiculo;
 	}
 	
 	

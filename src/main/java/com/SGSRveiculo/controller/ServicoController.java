@@ -15,30 +15,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SGSRveiculo.enumeracoes.EnumStatus;
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
+import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
-import com.SGSRveiculo.frameworkPDS.services.ContratanteService;
+import com.SGSRveiculo.frameworkPDS.models.Veiculo;
+import com.SGSRveiculo.frameworkPDS.services.ClienteService;
+import com.SGSRveiculo.frameworkPDS.services.OficinaService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
-import com.SGSRveiculo.frameworkPDS.services.status.StatusServico;
-import com.SGSRveiculo.models.Cliente;
-import com.SGSRveiculo.models.Oficina;
-import com.SGSRveiculo.models.Veiculo;
-import com.SGSRveiculo.services.OficinaService;
-import com.SGSRveiculo.services.VeiculoService;
-import com.SGSRveiculo.services.status.PreDiagnostico;
+import com.SGSRveiculo.frameworkPDS.services.VeiculoService;
 
 @Controller
 @RequestMapping("/servico")
 public class ServicoController {
 
 	@Autowired
-	private ContratanteService clienteService;
-	@Autowired
-	private OficinaService oficinaService;
+	private ClienteService clienteService;
 	@Autowired
 	private ServicoService servicoService;
 	@Autowired
 	private VeiculoService veiculoService;
+	@Autowired
+	private OficinaService oficinaService;
+
 
 	@GetMapping("/novoServico")
 	public ModelAndView formServico(@RequestParam(name="id", required=true) String id, HttpSession session, String descricao){
@@ -49,7 +50,7 @@ public class ServicoController {
 		Cliente cliente = (Cliente) session.getAttribute("usuario");
 		Cliente temp = (Cliente) clienteService.buscarPorId(cliente.getId());
 		
-		//List<Veiculo> veiculos = temp.getVeiculo();
+		List<Veiculo> veiculos = temp.getVeiculo();
 		List<Oficina> oficinas = oficinaService.buscarTodasOficinas();
 		
 		
@@ -59,7 +60,7 @@ public class ServicoController {
 		}
 		
 		mv.addObject("servico", servico);
-		//mv.addObject("veiculos", veiculos);
+		mv.addObject("veiculos", veiculos);
 		mv.addObject("oficinas", oficinas);
 		
 		return mv;
@@ -73,13 +74,11 @@ public class ServicoController {
 		Cliente cliente = (Cliente) clienteService.buscarPorId(tmp.getId());
 
 		
-		StatusServico status = new PreDiagnostico();//status inicial
-		servico.setStatus(status.getNome());
+		servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
+		servico.setOficina(oficinaService.buscarPorId(servico.getOficina().getId()));
+		servico.setVeiculo(veiculoService.buscarPorId(servico.getVeiculo().getId()));
+		servico.setCliente(cliente);
 		
-		System.out.println("Veiculo: " + servico.getProduto().getId());
-		servico.setPrestadora(oficinaService.buscarPorId(servico.getPrestadora().getId()));
-		servico.setProduto(veiculoService.buscarPorId(servico.getProduto().getId()));
-		servico.setContratante(cliente);
 		cliente.addServico(servico);
 		
 		servicoService.inserir(servico);
@@ -106,7 +105,7 @@ public class ServicoController {
 	}
 	
 	@GetMapping("/listarModelos" )
-	public  @ResponseBody List<String> listarModelos( String marca){
+	public  @ResponseBody List<String> listarModelos(String marca){
 		
 		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
 		
@@ -121,12 +120,12 @@ public class ServicoController {
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");
 		Oficina tmp = (Oficina) session.getAttribute("usuario");
-		Oficina oficina = (Oficina) oficinaService.buscarPorId(tmp.getId());
+		Oficina oficina = oficinaService.buscarPorId(tmp.getId());
 
 		//servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
-		servico.setPrestadora(oficina);
+		servico.setOficina(oficina);
 		
-		Cliente cliente = (Cliente) clienteService.buscarPorId(servico.getContratante().getId());
+		Cliente cliente = (Cliente) clienteService.buscarPorId(servico.getCliente().getId());
 		
 		if(cliente == null){
 			attributes.addAttribute("message", "Cliente não cadastrado.");
@@ -148,8 +147,8 @@ public class ServicoController {
 				return mv;
 			}
 			
-			servico.setContratante(cliente);
-			servico.setProduto(veiculoAtual);
+			servico.setCliente(cliente);
+			servico.setVeiculo(veiculoAtual);
 			oficina.addServico(servico);
 			cliente.addServico(servico);
 			servicoService.inserir(servico);
@@ -176,6 +175,16 @@ public class ServicoController {
 		mv.addObject("servico",servico);
 		
 		return mv;
+		
+	}
+	
+	@GetMapping("/pecaSite")
+	public List<Peca> buscarPeca(String nomePeca){
+		
+		
+		oficinaService.cadastrarPecasSite("http://www.triseteparts.com.br/busca/?q=", nomePeca);
+		
+		return null;
 		
 	}
 	

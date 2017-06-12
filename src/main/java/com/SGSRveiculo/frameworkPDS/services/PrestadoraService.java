@@ -5,36 +5,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRveiculo.frameworkPDS.models.Prestadora;
-import com.SGSRveiculo.frameworkPDS.repository.PrestadoraRepository;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
+import com.SGSRveiculo.frameworkPDS.repository.OficinaRepository;
 
 
 @Service
 public class PrestadoraService implements IPrestadoraService{
 	
 	@Autowired
-	private PrestadoraRepository prestadoraRepository;
+	private OficinaRepository oficinaRepository;
 	//@Autowired
 	//private LogicaAcompanhamento logicaAcompanhamento;
 	
 	@Override
-	public void inserir(Prestadora prestadora) {
-		prestadoraRepository.save(prestadora);
+	public void inserir(Oficina oficina) {
+		oficinaRepository.save(oficina);
 	}
 
 	@Override
-	public void deletar(Prestadora prestadora) {
-		prestadoraRepository.delete(prestadora);
+	public void deletar(Oficina oficina) {
+		oficinaRepository.delete(oficina);
 	}
 
 	@Override
-	public Prestadora buscarPorId(String id) {
-		return prestadoraRepository.findOne(id);
+	public Oficina buscarPorId(String id) {
+		return oficinaRepository.findOne(id);
 	}
 
 	@Override
-	public List<Prestadora> buscarTodos() {
-		return prestadoraRepository.findAll();
+	public List<Oficina> buscarTodos() {
+		return oficinaRepository.findAll();
 	}
 
 }

@@ -10,7 +10,7 @@ import com.SGSRveiculo.frameworkPDS.models.Peca;
 @Component
 public abstract class Busca {
 
-	private List<Peca> pecas;
+	protected List<Peca> pecas;
 
 	public Busca(){
 		
@@ -30,13 +30,13 @@ public abstract class Busca {
 	
 
 	
-	public final List<Peca> buscarPecaMaisAvaliado(String idValor, String idProduto) {
+	public final List<Peca> buscarPecaMaisAvaliado() {
 
 		return maisAvaliado(buscaPeca());
 	}
 	
 	
-	public final List<Peca> buscarPecaMenorPreco(String idValor, String idProduto){
+	public final List<Peca> buscarPecaMenorPreco(){
 
 		return menorPreco(buscaPeca());
 	}

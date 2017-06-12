@@ -1,16 +1,22 @@
 package com.SGSRveiculo.frameworkPDS.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
-import com.SGSRveiculo.frameworkPDS.models.Contratante;
-import com.SGSRveiculo.frameworkPDS.models.Prestadora;
-import com.SGSRveiculo.frameworkPDS.models.Produto;
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
+import com.SGSRveiculo.frameworkPDS.models.Orcamento;
+import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
+import com.SGSRveiculo.frameworkPDS.models.Veiculo;
 import com.SGSRveiculo.frameworkPDS.repository.CheckInRepository;
+import com.SGSRveiculo.frameworkPDS.repository.OficinaRepository;
+import com.SGSRveiculo.frameworkPDS.repository.PecaRepository;
 import com.SGSRveiculo.frameworkPDS.repository.ServicoRepository;
+import com.SGSRveiculo.services.busca.BuscaPecaSite;
 
 
 @Service
@@ -20,7 +26,11 @@ public class ServicoService implements IServicoService{
 	private ServicoRepository servicoRepository;
 	@Autowired
 	private CheckInRepository checkInRepository;
-
+	@Autowired
+	private PecaRepository pecaRepository;
+	@Autowired
+	private OficinaRepository oficinaRepository;
+	private BuscaPecaSite buscaSite;
 	
 	/**
 	 * Requisito gera uma atualização do status do serviço
@@ -30,13 +40,13 @@ public class ServicoService implements IServicoService{
 	 */
 	
 	@Override
-	public List<Servico> buscarServicosPorContratante(Contratante contratante) {
-		return servicoRepository.listarServicoPorContratante(contratante);
+	public List<Servico> buscarServicosPorCliente(Cliente cliente) {
+		return servicoRepository.listarServicoPorCliente(cliente);
 	}
 	
 	@Override
-	public List<Servico> buscarServicosPorPrestadora(Prestadora prestadora) {
-		return servicoRepository.listarServicoPorPrestadora(prestadora);
+	public List<Servico> buscarServicosPorOficina(Oficina oficina) {
+		return servicoRepository.listarServicoPorOficina(oficina);
 	}
 
 	@Override
@@ -68,8 +78,8 @@ public class ServicoService implements IServicoService{
 	}
 	
 	@Override
-	public void atualizarProduto(Produto produto) {
-		servicoRepository.updateProduto(produto);
+	public void atualizarVeiculo(Veiculo veiculo) {
+		servicoRepository.updateProduto(veiculo);
 	}
 
 	@Override
@@ -93,10 +103,19 @@ public class ServicoService implements IServicoService{
 	}
 
 	@Override
-	public void deletarTodos(Produto produto) {
-		// TODO Auto-generated method stub
+	public void deletarTodos(Veiculo veiculo) {
+		
+		List<Servico> servicos = servicoRepository.findAll();
+		
+		for(Servico serv: servicos){
+			
+			if(serv.getVeiculo().getId() == veiculo.getId()){
+			
+			servicoRepository.delete(serv);
+			}
+		}
 		
 	}
-	
+
 
 }

@@ -3,15 +3,15 @@ package com.SGSRveiculo.frameworkPDS.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.SGSRveiculo.frameworkPDS.models.Contratante;
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
 
 
 public interface IContratanteService {
 	
-	public Contratante buscarID(String id);
-	public Contratante buscarPorId(String id);
-	public void inserir(Contratante contratante);
-	public void deletar(Contratante contratante);
-	public List<Contratante> buscarTodos();
+	public Cliente buscarID(String id);
+	public Cliente buscarPorId(String id);
+	public void inserir(Cliente contratante);
+	public void deletar(Cliente contratante);
+	public List<Cliente> buscarTodos();
 	void verificaProduto(String cpf);
 }

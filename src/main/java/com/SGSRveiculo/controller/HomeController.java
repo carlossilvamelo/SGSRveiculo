@@ -15,13 +15,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SGSRveiculo.enumeracoes.EnumMarcasModelos;
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
 import com.SGSRveiculo.frameworkPDS.models.MarcaModelo;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
 import com.SGSRveiculo.frameworkPDS.repository.MarcaModeloRepository;
 import com.SGSRveiculo.frameworkPDS.services.CheckInService;
-import com.SGSRveiculo.models.Cliente;
-import com.SGSRveiculo.models.Oficina;
-import com.SGSRveiculo.services.ClienteService;
-import com.SGSRveiculo.services.OficinaService;
+import com.SGSRveiculo.frameworkPDS.services.ClienteService;
+import com.SGSRveiculo.frameworkPDS.services.OficinaService;
+import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 
 
 @Controller
@@ -87,7 +88,7 @@ public class HomeController {
 		
 		ModelAndView mv;
 		
-		Cliente cliente = (Cliente) clienteService.buscarPorId(login);
+		Cliente cliente =  clienteService.buscarPorId(login);
 		
 		if(cliente != null){
 			System.out.println("cliente");
@@ -97,7 +98,7 @@ public class HomeController {
 			mv = new ModelAndView("redirect:cliente");
 		}
 		else{
-			Oficina oficina = (Oficina) oficinaService.buscarPorId(login);
+			Oficina oficina = oficinaService.buscarPorId(login);
 			
 			if(oficina != null){
 				attributes.addFlashAttribute("message","Bem Vindo " + oficina.getNome());
@@ -115,5 +116,21 @@ public class HomeController {
 		return mv;
 	}
 	
+	@GetMapping("/sair")
+	public ModelAndView sair( HttpSession session){
+		
+		
+		if(session.getAttribute("oficina") != null){
+			
+			session.setAttribute("oficina", null);
+		}else{
+			
+			session.setAttribute("usuario", null);
+		}
+		
+		ModelAndView mv = new ModelAndView("index");
+		
+		return mv;
+	}
 	
 }

@@ -11,11 +11,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.SGSRveiculo.frameworkPDS.models.Contratante;
-import com.SGSRveiculo.frameworkPDS.models.Prestadora;
-import com.SGSRveiculo.frameworkPDS.models.Produto;
+import com.SGSRveiculo.frameworkPDS.models.Cliente;
+import com.SGSRveiculo.frameworkPDS.models.Oficina;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
-
+import com.SGSRveiculo.frameworkPDS.models.Veiculo;
 
 
 
@@ -23,14 +22,14 @@ import com.SGSRveiculo.frameworkPDS.models.Servico;
 @Transactional
 public interface ServicoRepository extends JpaRepository<Servico, Integer>{
 
-	@Query("SELECT s FROM  Servico s WHERE s.contratante = :contratante")
-	ArrayList<Servico> listarServicoPorContratante(@Param("contratante") Contratante contratante);
+	@Query("SELECT s FROM  Servico s WHERE s.cliente = :cliente")
+	ArrayList<Servico> listarServicoPorCliente(@Param("cliente") Cliente cliente);
 	
-	@Query("SELECT s FROM  Servico s WHERE s.prestadora = :prestadora")
-	ArrayList<Servico> listarServicoPorPrestadora(@Param("prestadora") Prestadora prestadora);
+	@Query("SELECT s FROM  Servico s WHERE s.oficina = :oficina")
+	ArrayList<Servico> listarServicoPorOficina(@Param("oficina") Oficina oficina);
 	
 	@Modifying
-	@Query("UPDATE Servico s SET s.produto = '' WHERE s.produto =:produto")
-	ArrayList<Servico> updateProduto(@Param("produto") Produto produto);
+	@Query("UPDATE Servico s SET s.veiculo = '' WHERE s.veiculo =:veiculo")
+	ArrayList<Servico> updateProduto(@Param("veiculo") Veiculo veiculo);
 }
 

@@ -10,7 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -21,7 +24,7 @@ public class Orcamento implements Serializable{
 	private static final long serialVersionUID = -3329162767984686645L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id_orcamento")
 	private Long id;
 	private Double precoMaoObra;
@@ -29,6 +32,8 @@ public class Orcamento implements Serializable{
 	private Double valorAdicional;
 	private Double descontoValor;
 	private Integer descontoPorcentagem;
+	@ManyToMany(mappedBy="orcamento", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	private List<Peca> pecas;
 	
 	public Orcamento() {
 		// TODO Auto-generated constructor stub
@@ -91,26 +96,28 @@ public class Orcamento implements Serializable{
 		this.precoMaoObra = precoMaoObra;
 	}
 
-	public List<Peca> getPecasTroca() {
-		return pecasTroca;
-	}
-
-	private void setPecasTroca(List<Peca> pecasTroca) {
-		this.pecasTroca = pecasTroca;
-	}
-	
-	public void addPeca(Peca peca){
-		
-		setPecasTroca(new ArrayList<Peca>());
-		pecasTroca.add(peca);
-	}
-
 	public String getObs() {
 		return obs;
 	}
 
 	public void setObs(String obs) {
 		this.obs = obs;
+	}
+
+
+	public List<Peca> getPecas() {
+		return pecas;
+	}
+
+
+	public void setPecas() {
+		this.pecas =new ArrayList<Peca>();
+	}
+	
+	public void addPeca(Peca peca){
+		
+		setPecas();
+		pecas.add(peca);
 	}
 	
 }

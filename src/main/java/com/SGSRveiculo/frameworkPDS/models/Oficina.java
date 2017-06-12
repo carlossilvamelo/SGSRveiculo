@@ -1,5 +1,6 @@
 package com.SGSRveiculo.frameworkPDS.models;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-
 @Entity
-public class Prestadora implements Serializable{
+public class Oficina implements Serializable{
 	
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id_prestadora")
+	@Column(name="id_oficina")
 	private String id;
 	private String nome;
 	private String telefone;
@@ -28,10 +28,10 @@ public class Prestadora implements Serializable{
 	@OneToOne
 	private Endereco endereco;
 	
-	@OneToMany(mappedBy="prestadora", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="oficina", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Servico> servicos;
 	
-	public Prestadora(){}
+	public Oficina(){}
 	
 	public String getId() {
 		return id;

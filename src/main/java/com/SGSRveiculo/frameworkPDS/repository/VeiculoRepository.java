@@ -9,19 +9,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.SGSRveiculo.frameworkPDS.models.Produto;
+import com.SGSRveiculo.frameworkPDS.models.Veiculo;
 
 
 @Transactional
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, String>{
+public interface VeiculoRepository extends JpaRepository<Veiculo, String>{
 	
 	
-	@Query("SELECT p FROM  Produto p WHERE p.id = :id")
-	ArrayList<Produto> listarPorId(@Param("id") String id);
+	@Query("SELECT p FROM  Veiculo p WHERE p.id = :id")
+	ArrayList<Veiculo> listarPorId(@Param("id") String id);
 	
 	@Modifying
-	@Query("DELETE FROM Produto p WHERE p.id = :id")
+	@Query("DELETE FROM Veiculo p WHERE p.id = :id")
 	void deletePorId(@Param("id") String id);
 
 }

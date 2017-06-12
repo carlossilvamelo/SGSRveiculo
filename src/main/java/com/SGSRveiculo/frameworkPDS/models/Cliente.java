@@ -9,18 +9,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat; 
 
 @Entity
-public class Contratante implements Serializable{
+public class Cliente implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id_contratante")
+	@Column(name="id_cliente")
 	private String id;
 	private String nome;
 	private String telefone;
@@ -28,8 +30,8 @@ public class Contratante implements Serializable{
 	private String email;
 	private String sexo;
 
-	@OneToMany(mappedBy="contratante", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
-	private List<Produto> produto;
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	private List<Veiculo> veiculo;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
 	private Endereco endereco;
@@ -37,14 +39,11 @@ public class Contratante implements Serializable{
 	@DateTimeFormat(pattern="dd/mm/yyyy")
 	private Calendar dataNascimento;
 
-	@OneToMany(mappedBy="contratante", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
 	private List<Servico> servicos = new ArrayList<Servico>();
 	
-	
-	
 
-	public Contratante(){};
-	
+	public Cliente(){};
 	
 	public String getTelefone() {
 		return telefone;
@@ -70,13 +69,9 @@ public class Contratante implements Serializable{
 	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
-
 	public List<Servico> getServicos() {
 		return servicos;
 	}
-
-
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
@@ -113,26 +108,21 @@ public class Contratante implements Serializable{
 	public void addServico(Servico servico){
 		this.servicos.add(servico);
 	}
-
-
 	public String getId() {
 		return id;
 	}
-
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
-
-	public List<Produto> getProduto() {
-		return produto;
+	public List<Veiculo> getVeiculo() {
+		return veiculo;
 	}
-	public void setProduto() {
-		this.produto = new ArrayList<Produto>();
+	public void setVeiculo() {
+		this.veiculo = new ArrayList<Veiculo>();
 	}
-	public void addProduto(Produto produto){
-		this.produto.add(produto);
+	public void addVeiculo(Veiculo produto){
+		setVeiculo();
+		this.veiculo.add(produto);
 	}
 	
 
