@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+		
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/custom.css}"/>
+	<script th:src="@{/layout/javascripts/bootstrap.min.js}"></script>
+	<script th:src="@{/layout/jquery/jquery-3.2.0.js}"></script>
+	
+	<meta charset="UTF-8"/>
+	<title>Oficina</title>
+	
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+			$("#addPeca").click(function(){
+
+				alert("AQUI");
+				
+			});
+		});
+	
+
+	</script>
+
+
+</head>
+<body>
+	<section layout:fragment="conteudo">
+	<div class="col-sm-9 col-md-10">
+		<h1><span th:text="${session.usuario.nome}"></span></h1>
+	</div>
+	<div class="row"></div>
+	<h2 class="col-sm-9 col-md-10 sub-header">Estoque de peças</h2>
+	<div class="row"></div>
+	<div class="table-responsive">
+         
+         <div>
+         <form method="get" action="../oficina/buscarPeca">
+				<span>Nome da peça:</span>
+				<input type="text" id="peca" name="peca"/>
+				<span>Site:</span>
+				<input type="text" id="site" name="site"/>
+				
+				<div>
+					<input class="btn btn-primary" type="submit" value="buscar"/>
+				</div>
+				
+			</form>
+			</div>
+			
+			<div th:if="${listaPeca != null}">
+				<table class="table table-striped">
+	              <thead>
+	                <tr>
+	                  <th>Nome</th>
+	                  <th>Preco</th>
+	                  <th>Quantidade</th>
+	                  <th>Descrição</th>
+	                  <th></th>
+	                </tr>
+	              </thead>
+	              	<tr id="peca" th:each="peca : ${listaPeca}">
+	              		<td><span id="nome" th:text="${peca.nome}"></span></td>
+	              		<td><span id="preco" th:text="${peca.preco}"></span></td>
+	              		<td><span id="quantidade" th:text="${peca.quantidade}"></span></td>
+	              		<td><span id="descricao" th:text="${peca.descricao}"></span></td>
+	              		<td><button title="ADD" id="addPeca" class="btn btn-success btn-xs"><label class="glyphicon glyphicon-plus"></label></button></td>
+	              	</tr>
+	              <tbody>
+	              </tbody>
+	            </table>
+            </div>
+    </div>
+	
+	</section>
+</body>
+</html>

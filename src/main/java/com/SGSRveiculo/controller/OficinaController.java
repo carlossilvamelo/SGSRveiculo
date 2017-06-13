@@ -252,5 +252,46 @@ public class OficinaController {
 		return mv;
 		
 	}
+	
+	@GetMapping("/novaPeca")
+	public ModelAndView novaPeca(){
+		
+		ModelAndView mv = new ModelAndView("/oficina/novaPeca");
+	
+		return mv;
+		
+	}
+	
+	@GetMapping("/buscarPeca")
+	public ModelAndView buscarPeca(Integer site, String peca){
+		
+		ModelAndView mv = new ModelAndView("/oficina/novaPeca");
+		List<Peca> listaPecas = null;
+		
+		if(site == 1){
+			
+			listaPecas = oficinaService.buscarPecaSite("http://www.triseteparts.com.br/busca/?q=", peca);
+		}
+		
+		if(!listaPecas.isEmpty()){
+			mv.addObject("listaPeca", listaPecas);
+		}else{
+			mv.addObject("msg", "Peças não encontradas");
+			
+		}
+		return mv;
+		
+	}
+	
+	@PostMapping("/buscarPeca")
+	public @ResponseBody Peca buscarPeca(Peca peca){
+		
+		System.out.println(peca.getNome());
+		pecaService.cadastrarPeca(peca);
+		
+		
+		return peca;
+		
+	}
 
 }

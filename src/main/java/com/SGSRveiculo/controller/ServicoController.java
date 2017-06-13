@@ -122,7 +122,7 @@ public class ServicoController {
 		Oficina tmp = (Oficina) session.getAttribute("usuario");
 		Oficina oficina = oficinaService.buscarPorId(tmp.getId());
 
-		//servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
+		servico.setStatus(EnumStatus.PRE_DIAGNOSTICO);
 		servico.setOficina(oficina);
 		
 		Cliente cliente = (Cliente) clienteService.buscarPorId(servico.getCliente().getId());

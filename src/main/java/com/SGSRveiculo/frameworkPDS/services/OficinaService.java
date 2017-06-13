@@ -63,7 +63,7 @@ public class OficinaService implements IOficinaService{
 	public List<Peca> buscarPecaSite(String url, String nomePeca) {
 		
 		
-		buscaSite = new BuscaPecaSite("http://www.triseteparts.com.br/busca/?q=", nomePeca);
+		buscaSite = new BuscaPecaSite(url, nomePeca);
 		return buscaSite.buscarPecaMenorPreco();
 	}
 
