@@ -1,6 +1,7 @@
 package com.SGSRveiculo.frameworkPDS.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -51,9 +52,14 @@ public class Acompanhamento implements Serializable {
 	public List<CheckIn> getCheckIns() {
 		return checkIns;
 	}
-
-	public void setCheckIns(List<CheckIn> checkIns) {
-		this.checkIns = checkIns;
+	
+	public void addChekin(CheckIn checkin){
+		
+		this.checkIns.add(checkin);
+	}
+	
+	public void setCheckIns() {
+		this.checkIns = new ArrayList<CheckIn>();
 	}
 
 	

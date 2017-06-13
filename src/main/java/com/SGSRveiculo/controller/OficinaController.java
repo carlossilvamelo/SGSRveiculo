@@ -25,6 +25,7 @@ import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.models.Veiculo;
 import com.SGSRveiculo.frameworkPDS.services.ClienteService;
+import com.SGSRveiculo.frameworkPDS.services.ContadorServicoVeiculo;
 import com.SGSRveiculo.frameworkPDS.services.OficinaService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.frameworkPDS.services.VeiculoService;
@@ -49,6 +50,8 @@ public class OficinaController {
 	private PecaService pecaService;
 	@Autowired
 	private ListaPecas pecas;
+	@Autowired
+	private ContadorServicoVeiculo contadorVeiculo;
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -202,12 +205,12 @@ public class OficinaController {
 		String msg = "";
 		orcamento.setServico(servico);
 		
-		oficinaService.gerarOrcamento(pecas.getPecas());
-		
+		orcamento.setPecas();
 		for(Peca peca: pecas.getPecas()){
-			
-			System.out.println(peca.getNome() + " para o serviço "+ servico.getDescricao());
+			orcamento.addPeca(peca);
 		}
+		
+		orcamento.setValorTotal(contadorVeiculo.contabilizarServiço(orcamento));
 		
 		servico.setOrcamentos();
 		servico.addOrcamentos(orcamento);
@@ -215,6 +218,11 @@ public class OficinaController {
 		if(servico.getOrcamentos().isEmpty()){
 			msg += "Não foi possível criar o orçamento";
 		}
+		
+		servicoService.inserirOrcamento(orcamento);
+		
+		servicoService.inserir(servico);
+		
 		msg += "O orçamento foi registrado com sucesso";
 		
 		mv.addObject("servico", servicoService.buscarPorId(idServico));

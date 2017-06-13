@@ -14,6 +14,7 @@ import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.models.Veiculo;
 import com.SGSRveiculo.frameworkPDS.repository.CheckInRepository;
 import com.SGSRveiculo.frameworkPDS.repository.OficinaRepository;
+import com.SGSRveiculo.frameworkPDS.repository.OrcamentoRepository;
 import com.SGSRveiculo.frameworkPDS.repository.PecaRepository;
 import com.SGSRveiculo.frameworkPDS.repository.ServicoRepository;
 import com.SGSRveiculo.services.busca.BuscaPecaSite;
@@ -30,6 +31,8 @@ public class ServicoService implements IServicoService{
 	private PecaRepository pecaRepository;
 	@Autowired
 	private OficinaRepository oficinaRepository;
+	@Autowired
+	private OrcamentoRepository orcamentoRepository;
 	private BuscaPecaSite buscaSite;
 	
 	/**
@@ -116,6 +119,13 @@ public class ServicoService implements IServicoService{
 		}
 		
 	}
-
+	
+	public void inserirOrcamento(Orcamento orcamento){
+		
+		orcamentoRepository.save(orcamento);
+	
+	}
+	
+	
 
 }

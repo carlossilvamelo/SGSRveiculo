@@ -2,15 +2,11 @@ package com.SGSRveiculo.frameworkPDS.models;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -29,10 +25,6 @@ public class Peca implements Serializable{
 	private Integer avaliacao;
 	private String descricao;
 	private Integer quantidade;
-	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
-	@JoinColumn(name="id_orcamento")
-	private Orcamento orcamento;
-	
 	
 	public String getNome() {
 		return nome;
@@ -58,12 +50,6 @@ public class Peca implements Serializable{
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-	public Orcamento getOrcamento() {
-		return orcamento;
-	}
-	public void setOrcamento(Orcamento orcamento) {
-		this.orcamento = orcamento;
 	}
 	public void setPreco(Double preco) {
 		this.preco = preco;

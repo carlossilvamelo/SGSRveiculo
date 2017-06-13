@@ -264,15 +264,19 @@ public class ServicoController {
 		
 		if(servico != null){
 			
-			lista = servico.getAcompanhamento().getCheckIns();
-			
-			if(lista.isEmpty()){
+			if(servico.getAcompanhamento() !=  null){
+				lista = servico.getAcompanhamento().getCheckIns();
 				
-				mv.addObject("msg", "Não há informações sobre o andamento do serviço nesse momento!");
-				
+				if(lista.isEmpty()){
+					
+					mv.addObject("msg", "Não há informações sobre o andamento do serviço nesse momento!");
+					
+				}else{
+					
+					mv.addObject("lista", lista);
+				}
 			}else{
-				
-				mv.addObject("lista", lista);
+				mv.addObject("msg", "Não há informações sobre o andamento do serviço nesse momento!");
 			}
 				
 		}

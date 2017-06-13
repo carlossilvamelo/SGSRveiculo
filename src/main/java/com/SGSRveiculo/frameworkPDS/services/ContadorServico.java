@@ -1,6 +1,6 @@
 package com.SGSRveiculo.frameworkPDS.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,12 @@ public abstract class ContadorServico {
 	
 	
 	public final Double contabilizarServiço(Orcamento orcamento) {
+		
 		Double valor= 0.0;
 		valor += orcamento.getPrecoMaoObra();
 		//puxar a lista de pecas com o id do orcamento
-		ArrayList<Peca> pecas = (ArrayList<Peca>) orcamento.getPecas();
+		List<Peca> pecas = orcamento.getPecas();
+		
 		for (Peca peca : pecas) {
 			valor += peca.getPreco();
 		}
@@ -23,6 +25,7 @@ public abstract class ContadorServico {
 		valor += orcamento.getValorAdicional();
 		valor = taxasSobreValor(valor);
 		valor = addDescontoPorcentagem(valor, orcamento);
+		
 		return valor;
 	}
 

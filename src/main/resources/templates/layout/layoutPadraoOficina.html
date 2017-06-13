@@ -73,7 +73,7 @@
 	      </li>
 	      
 	      <li>
-	        <a href="#"><em class="fa  fa-sign-out"></em></a>
+	        <a th:href="@{/sair}"><em class="fa  fa-sign-out"></em></a>
 	      </li> 
 	    </ul>
 
@@ -101,10 +101,17 @@
 	        		</li>
 	        		
 	        		<li class="aw-menu__item">
-          			<a th:href="@{~/oficina/novoVeiculo(id=${session.usuario.id})}">
-          				<i class="fa  fa-fw  fa-plus-circle"></i>
-          				<span>Cadastrar veículo</span>
-          			</a>
+	          			<a th:href="@{~/oficina/novoVeiculo(id=${session.usuario.id})}">
+	          				<i class="fa  fa-fw  fa-plus-circle"></i>
+	          				<span>Cadastrar veículo</span>
+	          			</a>
+	        		</li>
+	        		
+	        		<li class="aw-menu__item">
+	          			<a th:href="@{../oficina/estoque}">
+	          				<i class="fa  fa-fw  fa-plus-circle"></i>
+	          				<span>Estoque de peças</span>
+	          			</a>
 	        		</li>
 	        		
 				</ul>

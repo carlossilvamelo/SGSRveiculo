@@ -1,13 +1,17 @@
 package com.SGSRveiculo.frameworkPDS.services;
 
+import org.springframework.stereotype.Service;
+
 import com.SGSRveiculo.frameworkPDS.models.Orcamento;
 
+@Service
 public class ContadorServicoVeiculo extends ContadorServico{
 
 	@Override
 	public Double addDescontoPorcentagem(Double valor, Orcamento orcamento) {
-		Double valorDesconto = (double) (100 - orcamento.getDescontoPorcentagem());
-		valor = valor * (valorDesconto/100);
+		Double valorDesconto = (double) orcamento.getDescontoPorcentagem();
+		valorDesconto = valor * (valorDesconto/100);
+		valor = valor - valorDesconto;
 		return valor;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
 import com.SGSRveiculo.frameworkPDS.models.Cliente;
 import com.SGSRveiculo.frameworkPDS.models.Oficina;
+import com.SGSRveiculo.frameworkPDS.models.Orcamento;
 import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.models.Veiculo;
@@ -25,6 +26,8 @@ public interface IServicoService {
 	public void deletarTodos(Veiculo veiculo);
 	public List<CheckIn> listarCheckIn(Integer id);
 	public void verificarServico(Integer id);
+	public void inserirOrcamento(Orcamento orcamento);
+
 	
 	
 }

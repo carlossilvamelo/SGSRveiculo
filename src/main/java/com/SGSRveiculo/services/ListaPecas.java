@@ -21,7 +21,7 @@ public class ListaPecas {
 	}
 	
 	public void add(Peca peca){
-		
+		System.out.println(peca.getPreco());
 		pecas.add(peca);
 	}
 	

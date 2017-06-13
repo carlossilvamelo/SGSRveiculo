@@ -2,7 +2,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	layout:decorator="layout/LayoutPadraoOficina">
 	
 <head>
 		
@@ -13,21 +13,40 @@
 	<meta charset="UTF-8"/>
 	<title>Oficina</title>
 	
+	<script type="text/javascript">
 
+		function addPeca(){
+
+
+			
+			 $('.pecas').each(function(i, val) {
+				 var peca = {
+					      nome : val.nome,
+					      preco :val.preco
+					     
+					    };
+						alert(peca);
+				
+			});
+		}
+		
+	</script>
+	<!--
 	<script type="text/javascript">
 
 		$(document).ready(function(){
-
+	
 			$("#addPeca").click(function(){
 
-				alert("AQUI");
+				var peca = $("#peca").html();
+				alert(peca);
 				
 			});
 		});
 	
 
 	</script>
-
+	-->
 
 </head>
 <body>
@@ -60,17 +79,21 @@
 	                <tr>
 	                  <th>Nome</th>
 	                  <th>Preco</th>
-	                  <th>Quantidade</th>
 	                  <th>Descrição</th>
 	                  <th></th>
 	                </tr>
 	              </thead>
-	              	<tr id="peca" th:each="peca : ${listaPeca}">
-	              		<td><span id="nome" th:text="${peca.nome}"></span></td>
-	              		<td><span id="preco" th:text="${peca.preco}"></span></td>
-	              		<td><span id="quantidade" th:text="${peca.quantidade}"></span></td>
-	              		<td><span id="descricao" th:text="${peca.descricao}"></span></td>
-	              		<td><button title="ADD" id="addPeca" class="btn btn-success btn-xs"><label class="glyphicon glyphicon-plus"></label></button></td>
+	              	<trclass="pecas" th:each="peca : ${listaPeca}">
+	              		
+	              		<td><span  th:text="${peca.nome}"></span></td>
+	              		<td><span  th:text="${peca.preco}"></span></td>
+	              		<td><span  th:text="${peca.descricao}"></span></td>
+	              		<td>
+	              			<button title="ADD" class="btn btn-success btn-xs" onclick="addPeca()">
+	              				<label class="glyphicon glyphicon-plus"></label>
+	              			</button>
+	              		</td>
+						
 	              	</tr>
 	              <tbody>
 	              </tbody>

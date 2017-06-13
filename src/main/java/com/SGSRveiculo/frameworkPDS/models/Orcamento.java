@@ -29,14 +29,25 @@ public class Orcamento implements Serializable{
 	private Long id;
 	private Double precoMaoObra;
 	private String obs;
+	private Double valorTotal;
 	private Double valorAdicional;
 	private Double descontoValor;
 	private Integer descontoPorcentagem;
-	@ManyToMany(mappedBy="orcamento", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	private boolean pago;
+	@OneToMany
 	private List<Peca> pecas;
+	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
+	@JoinColumn(name="id_servico")
+	private Servico servico;
+
 	
 	public Orcamento() {
-		// TODO Auto-generated constructor stub
+		pago = false;
+		valorTotal = 0.0;
+		valorAdicional = 0.0;
+		descontoValor = 0.0;
+		descontoPorcentagem = 0;
+		precoMaoObra = 0.0;
 	}
 	
 	
@@ -81,12 +92,6 @@ public class Orcamento implements Serializable{
 		this.servico = servico;
 	}
 
-	@OneToMany(mappedBy="orcamento",fetch=FetchType.LAZY, cascade= CascadeType.ALL)
-	private List<Peca> pecasTroca;
-	
-	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
-	@JoinColumn(name="id_servico")
-	private Servico servico;
 
 	public Double getPrecoMaoObra() {
 		return precoMaoObra;
@@ -116,8 +121,28 @@ public class Orcamento implements Serializable{
 	
 	public void addPeca(Peca peca){
 		
-		setPecas();
+		
 		pecas.add(peca);
+	}
+
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+
+	public boolean isPago() {
+		return pago;
+	}
+
+
+	public void setPago(boolean pago) {
+		this.pago = pago;
 	}
 	
 }
