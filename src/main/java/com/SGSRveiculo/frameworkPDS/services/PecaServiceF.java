@@ -35,6 +35,12 @@ public class PecaServiceF implements IPecaService{
 		return pecaRepository.getOne(id);
 	}
 
+	@Override
+	public Peca buscarPorNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

@@ -33,7 +33,7 @@ public class Orcamento implements Serializable{
 	private Double valorAdicional;
 	private Double descontoValor;
 	private Integer descontoPorcentagem;
-	private boolean pago;
+	private boolean pago = false;
 	@OneToMany
 	private List<Peca> pecas;
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
@@ -136,7 +136,7 @@ public class Orcamento implements Serializable{
 	}
 
 
-	public boolean isPago() {
+	public boolean getPago() {
 		return pago;
 	}
 

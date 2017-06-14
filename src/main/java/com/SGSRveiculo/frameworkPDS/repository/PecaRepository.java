@@ -14,4 +14,7 @@ public interface PecaRepository extends JpaRepository<Peca, Long>{
 	
 	@Query("SELECT p FROM Peca p WHERE p.nome = :nome AND p.quantidade > 0 ")
 	public Peca verificarDisponibilidade(@Param("nome") String nome);
+	
+	@Query("SELECT p FROM Peca p WHERE p.nome = :nome")
+	public Peca buscarPorNome(@Param("nome") String nome);
 }

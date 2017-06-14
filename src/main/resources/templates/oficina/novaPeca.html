@@ -15,20 +15,45 @@
 	
 	<script type="text/javascript">
 
-		function addPeca(){
+		$(document).ready(function(){
+	
+			$('.btn-success').click(function(){
+					//busca o a tr que contém o botão que foi clicado
+					//pega o indice da linha que o botão foi clicado
+					var teste = this.closest('tr').rowIndex;
+					
+					var peca = [];
+					
+					//percorre todas as tr até encontrar a que fi clicada
+					 $('.pecas').each(function(i, val) {
 
+						//pega os valores para inserir no objeto	
+						 var nome = val.children[1].innerHTML;
+						 var preco = val.children[2].innerHTML;
+					
+						if(i === (teste-1)){
+							peca.push(nome + ";");
+							peca.push(preco);
+							
+						}
+							
+					});
+						
+					alert(peca.length);
+					
+					$.ajax({
+						
+						url: '/oficina/cadastrarPeca',
+						data:{'peca': JSON.stringify(peca)},
+						dataType: "json",
+						success: function(data){
 
-			
-			 $('.pecas').each(function(i, val) {
-				 var peca = {
-					      nome : val.nome,
-					      preco :val.preco
-					     
-					    };
-						alert(peca);
-				
+							$("#msg").html() = data;
+						}
+				 });
+					
 			});
-		}
+		});
 		
 	</script>
 	<!--
@@ -56,6 +81,9 @@
 	</div>
 	<div class="row"></div>
 	<h2 class="col-sm-9 col-md-10 sub-header">Estoque de peças</h2>
+	<div>
+		<span id="msg"></span>
+	</div>
 	<div class="row"></div>
 	<div class="table-responsive">
          
@@ -77,25 +105,28 @@
 				<table class="table table-striped">
 	              <thead>
 	                <tr>
+	                  <th>Ordem</th>
 	                  <th>Nome</th>
 	                  <th>Preco</th>
 	                  <th>Descrição</th>
 	                  <th></th>
 	                </tr>
 	              </thead>
-	              	<trclass="pecas" th:each="peca : ${listaPeca}">
+	              <tbody>
+	              	<tr class="pecas" th:each="peca,iterationStatus  : ${listaPeca}">
 	              		
-	              		<td><span  th:text="${peca.nome}"></span></td>
-	              		<td><span  th:text="${peca.preco}"></span></td>
-	              		<td><span  th:text="${peca.descricao}"></span></td>
+	              		<td th:text="${iterationStatus.count}"></td>
+	              		<td th:text="${peca.nome}"></td>
+	              		<td th:text="${peca.preco}"></td>
+	              		<td th:text="${peca.descricao}"></td>
 	              		<td>
-	              			<button title="ADD" class="btn btn-success btn-xs" onclick="addPeca()">
+	              			<button title="ADD" class="btn btn-success btn-xs">
 	              				<label class="glyphicon glyphicon-plus"></label>
 	              			</button>
 	              		</td>
 						
 	              	</tr>
-	              <tbody>
+	              
 	              </tbody>
 	            </table>
             </div>

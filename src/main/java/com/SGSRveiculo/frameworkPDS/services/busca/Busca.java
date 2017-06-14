@@ -52,10 +52,7 @@ public abstract class Busca {
 	}
 
 	
-	public List<Peca> buscaPeca(){
-		
-		return pecas;	
-	}
+	public abstract List<Peca> buscaPeca();
 
 	
 

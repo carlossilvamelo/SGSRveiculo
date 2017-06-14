@@ -31,6 +31,7 @@ import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.frameworkPDS.services.VeiculoService;
 import com.SGSRveiculo.services.ListaPecas;
 import com.SGSRveiculo.services.PecaService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 
 @Controller
@@ -206,16 +207,16 @@ public class OficinaController {
 		orcamento.setServico(servico);
 		
 		orcamento.setPecas();
+		//diminuir a quantidade de peças 
 		for(Peca peca: pecas.getPecas()){
 			orcamento.addPeca(peca);
 		}
 		
 		orcamento.setValorTotal(contadorVeiculo.contabilizarServiço(orcamento));
 		
-		servico.setOrcamentos();
-		servico.addOrcamentos(orcamento);
+		servico.setOrcamento(orcamento);
 		
-		if(servico.getOrcamentos().isEmpty()){
+		if(servico.getOrcamento() == null){
 			msg += "Não foi possível criar o orçamento";
 		}
 		
@@ -246,19 +247,33 @@ public class OficinaController {
 		
 	}
 	
-	@GetMapping("/cadastrarPecasSite")
-	public ModelAndView cadastrarPecasSite(Integer site, String peca){
+	@GetMapping("/cadastrarPeca")
+	public @ResponseBody String cadastrarPecasSite(@RequestParam("peca") String peca){
 		
-		ModelAndView mv = new ModelAndView("redirect:/oficina/estoque");
+		String msg = "";
+		String[] div = peca.split(";");
 		
-		if(site == 1){
+		Peca novaPeca = new Peca();
+		//limpa o texto que vem da view
+		novaPeca.setNome(div[0].replace("[", "").replace("\"", ""));
+		novaPeca.setPreco(div[1].replace("]", "").replace("\"", "").replace(",", ""));
+		novaPeca.setQuantidade(1);
+		
+		Peca temp = pecaService.buscarPorNome(novaPeca.getNome());
+		
+		//verifica se já existe uma peça com esse nome
+		if(temp != null){
+			temp.setQuantidade(temp.getQuantidade() + 1);
+			pecaService.cadastrarPeca(temp);
+		}else{
+		
+			pecaService.cadastrarPeca(novaPeca);
+			msg = "success";
 			
-			oficinaService.cadastrarPecasSite("http://www.triseteparts.com.br/busca/?q=", peca);
 		}
 		
 		
-		return mv;
-		
+		return msg;
 	}
 	
 	@GetMapping("/novaPeca")
@@ -276,11 +291,14 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("/oficina/novaPeca");
 		List<Peca> listaPecas = null;
 		
+		try{
 		if(site == 1){
 			
 			listaPecas = oficinaService.buscarPecaSite("http://www.triseteparts.com.br/busca/?q=", peca);
 		}
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		if(!listaPecas.isEmpty()){
 			mv.addObject("listaPeca", listaPecas);
 		}else{
