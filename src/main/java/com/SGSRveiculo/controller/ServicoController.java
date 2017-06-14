@@ -200,24 +200,10 @@ public class ServicoController {
 		
 		servico.getOrcamento().setPago(true);
 		ModelAndView mv = new ModelAndView("redirect:/cliente");
-		
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
+
 		Pagamentos pagamento = new Pagamentos();
-		pagamento.setFormaPagamento("credito");
-		pagamento.setDataPagamento(new GregorianCalendar());
-		pagamento.setResumoServico(servico.getDescricao());
-		pagamento.setModeloVeiculo(servico.getVeiculo().getMarcaModelo().getModelo());
-	
-		pagamentosService.salvarPagamento(pagamento);
+		pagamentosService.processarPagamentoCredito(pagamento, servico);
+		
 		servicoService.inserir(servico);
 		mv.addObject("servico", servico);
 		return mv;
