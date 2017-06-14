@@ -36,10 +36,6 @@ public class Servico implements Serializable{
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_acompanhamento")
 	private Acompanhamento acompanhamento;
-
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="id_MarcaModelo")
-	private MarcaModelo marcaModelo;
 	
 	private EnumStatus status;
 	
@@ -53,7 +49,7 @@ public class Servico implements Serializable{
 	@JoinColumn(name="id_oficina")
 	private Oficina oficina;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	@ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.MERGE)
 	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 	

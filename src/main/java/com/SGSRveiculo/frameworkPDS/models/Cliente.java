@@ -30,7 +30,7 @@ public class Cliente implements Serializable{
 	private String email;
 	private String sexo;
 
-	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Veiculo> veiculo;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
@@ -39,7 +39,7 @@ public class Cliente implements Serializable{
 	@DateTimeFormat(pattern="dd/mm/yyyy")
 	private Calendar dataNascimento;
 
-	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade={CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Servico> servicos = new ArrayList<Servico>();
 	
 

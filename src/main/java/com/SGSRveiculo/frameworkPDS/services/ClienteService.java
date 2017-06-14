@@ -39,7 +39,8 @@ public class ClienteService implements IContratanteService{
 	@Override
 	public void inserir(Cliente cliente) {
 		try {
-			clienteRepository.save(cliente);
+			//clienteRepository.save(cliente);
+			clienteRepository.saveAndFlush(cliente);
 		} catch (DataAccessException e) {
 			System.err.println("Erro na camada de dados!");	
 			e.printStackTrace();

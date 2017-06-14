@@ -25,11 +25,11 @@ public class Veiculo implements Serializable{
 	private String id;
 	private String nome;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne
 	@JoinColumn(name="id_marcaModelo")
 	private MarcaModelo marcaModelo;
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 	

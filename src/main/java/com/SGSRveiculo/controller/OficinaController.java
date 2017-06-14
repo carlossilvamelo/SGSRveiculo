@@ -197,12 +197,17 @@ public class OficinaController {
 	}
 	
 	@PostMapping("/gerarOrcamento")
-	public ModelAndView gerarOrcamento(@RequestParam(name="id", required=true)Integer idServico){
+	public ModelAndView gerarOrcamento(@RequestParam(name="id", required=true)Integer idServico, Double maoDeObra, Double desconto){
 		
 		ModelAndView mv = new ModelAndView("redirect:/oficina");
+	
 		
 		Orcamento orcamento = new Orcamento();
+			orcamento.setPrecoMaoObra(maoDeObra);
+			orcamento.setDescontoValor(desconto);
+		
 		Servico servico = servicoService.buscarPorId(idServico);
+		
 		String msg = "";
 		orcamento.setServico(servico);
 		

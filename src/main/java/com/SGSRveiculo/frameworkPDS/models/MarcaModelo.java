@@ -26,7 +26,7 @@ public class MarcaModelo implements Serializable {
 	private Long id;
 	private String marca;
 	private String modelo;
-	@OneToOne(mappedBy="marcaModelo", cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="marcaModelo", cascade=CascadeType.REMOVE)
 	private Veiculo veiculo;
 
 	public MarcaModelo(){
