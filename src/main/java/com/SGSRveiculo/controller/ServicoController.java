@@ -1,6 +1,7 @@
 package com.SGSRveiculo.controller;
 
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,11 +20,13 @@ import com.SGSRveiculo.enumeracoes.EnumStatus;
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
 import com.SGSRveiculo.frameworkPDS.models.Cliente;
 import com.SGSRveiculo.frameworkPDS.models.Oficina;
+import com.SGSRveiculo.frameworkPDS.models.Pagamentos;
 import com.SGSRveiculo.frameworkPDS.models.Peca;
 import com.SGSRveiculo.frameworkPDS.models.Servico;
 import com.SGSRveiculo.frameworkPDS.models.Veiculo;
 import com.SGSRveiculo.frameworkPDS.services.ClienteService;
 import com.SGSRveiculo.frameworkPDS.services.OficinaService;
+import com.SGSRveiculo.frameworkPDS.services.PagamentosService;
 import com.SGSRveiculo.frameworkPDS.services.ServicoService;
 import com.SGSRveiculo.frameworkPDS.services.VeiculoService;
 
@@ -39,7 +42,8 @@ public class ServicoController {
 	private VeiculoService veiculoService;
 	@Autowired
 	private OficinaService oficinaService;
-
+	@Autowired
+	private PagamentosService pagamentosService;
 
 	@GetMapping("/novoServico")
 	public ModelAndView formServico(@RequestParam(name="id", required=true) String id, HttpSession session, String descricao){
@@ -165,6 +169,63 @@ public class ServicoController {
 		return mv;
 
 	}
+	
+	@GetMapping("/realizarPagamento")
+	public ModelAndView realizarPagamentoForm(@RequestParam(name="id", required=true) Integer id){
+		
+		ModelAndView mv = new ModelAndView("pagamentos/cartaoCredito");
+		Servico servico = servicoService.buscarPorId(id);
+		
+		mv.addObject("servico", servico);
+		return mv;
+		
+	}
+	
+	@GetMapping("/visualizarPagamento")
+	public ModelAndView mostrarInfoPagamentoForm(@RequestParam(name="id", required=true) Integer id){
+		
+		ModelAndView mv = new ModelAndView("pagamentos/relatorioPagamento");
+		Servico servico = servicoService.buscarPorId(id);
+		
+		mv.addObject("servico", servico);
+		return mv;
+		
+	}
+	
+	@PostMapping("/processar")
+	public ModelAndView realizarPagamento(@RequestParam(name="id", required=true) Integer id,
+			String nome, String numeroC1, String numeroC2,String numeroC3, String numeroC4,
+			String codigoSeguranca,HttpSession session){
+		Servico servico = servicoService.buscarPorId(id);
+		
+		servico.getOrcamento().setPago(true);
+		ModelAndView mv = new ModelAndView("redirect:/cliente");
+		
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		Pagamentos pagamento = new Pagamentos();
+		pagamento.setFormaPagamento("credito");
+		pagamento.setDataPagamento(new GregorianCalendar());
+		pagamento.setResumoServico(servico.getDescricao());
+		pagamento.setModeloVeiculo(servico.getVeiculo().getMarcaModelo().getModelo());
+	
+		pagamentosService.salvarPagamento(pagamento);
+		servicoService.inserir(servico);
+		mv.addObject("servico", servico);
+		return mv;
+		
+	}
+	
+	
+	
 
 	@GetMapping("/relatorio")
 	public ModelAndView relatorio(@RequestParam(name="id", required=true) Integer id){

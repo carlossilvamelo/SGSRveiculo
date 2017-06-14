@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Pagamento</title>
+
+    <style>
+        body{
+            margin-left: 200px;
+            padding: 50px;
+        }
+        .divBandeiras{
+            padding-left: 100px;
+            padding-top: 50px;
+            width: 100%;
+        }
+        .divBandeiras div{
+            float: left;
+            margin: 10px;
+        }
+        .botaoEnviar{
+            width: 200px;
+            margin-top: 20px;
+            margin-left: 65px;
+            padding: 10px;
+        }
+        .formInfo{
+            padding: 100px;
+        }
+        .formInfo div{
+            margin-top: 10px;
+        }
+        .formInfo div#numCartao input{
+            width: 40px;
+        }
+
+        .loader {
+
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        div#carregando{
+            display: none;
+            float: right;
+            margin-right: 300px;
+            margin-top: 150px;
+        }
+        div#carregando span{
+            font-size: 19px;
+            margin-left: 40px;
+            margin-top: 50px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script type="text/javascript">
+        function processamento(item) {
+            var display = document.getElementById(item).style.display;
+
+            if(display == 'none') {
+                document.getElementById(item).style.display = 'block';
+            }else{
+                document.getElementById(item).style.display = 'block';
+            }
+
+            window.setTimeout("redirect()", 4000);
+
+        };
+
+        function redirect(){
+        	
+        };
+    </script>
+
+</head>
+<body>
+<div id="carregando">
+    <div  class="loader"></div>
+    <span>Processando...</span>
+</div>
+
+
+    <div class="divBandeiras">
+
+       <div id="visa">
+           <img src="/bandeiraVisa.png" />
+           <br/>
+           <input style="margin-top: 20px" type="radio" name="banco" value="Visa"/> Visa
+       </div>
+        <div id="masterCard">
+            <img src="/bandeiraMaster.png" alt=""/>
+            <br/>
+            <input style="margin-top: 5px" type="radio" name="banco" value="MasterCard"/> MasterCard
+        </div>
+       <div>
+           <img src="/bandeiraAE.png" alt=""/>
+           <br/>
+           <input type="radio" name="banco" value="AmericanExpress"/> AmericanExpress
+       </div>
+
+    </div>
+
+    <div class="formInfo">
+        <form th:action="@{/servico/processar(id=${servico.id})}"  method="post">
+
+
+
+            <div style="margin-left: 65px;" id="nomeTitular" class="form-group">
+                <label >Nome do titular:</label>
+                <input class="form-control" type="text" name="nome"/>
+            </div>
+            <div style="margin-left: 50px;" id="numCartao" class="form-group">
+                <label >Número do cartão:</label>
+                <input class="form-control" type="text" name="numeroCartao1"/>
+                <input class="form-control" type="text" name="numeroCartao2"/>
+                <input class="form-control" type="text" name="numeroCartao3"/>
+                <input class="form-control" type="text" name="numeroCartao4"/>
+                
+            </div>
+            <div style="margin-left: 35px;" id="codSeg" class="form-group">
+                <label >código de segurança:</label>
+                <input class="form-control" type="text" name="codigo1"/>
+            </div>
+            <div id="validade" class="form-group">
+                <label >Data de validade docartão:</label>
+                <input class="form-control" type="text" name="data"/>
+            </div>
+
+            <input class="btn btn-primary botaoEnviar" type="submit" onclick="processamento('carregando');" value="Enviar" />
+        </form>
+    </div>
+
+
+
+
+</body>
+</html>
