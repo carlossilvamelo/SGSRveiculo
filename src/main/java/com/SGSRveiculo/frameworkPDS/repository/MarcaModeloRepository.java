@@ -21,6 +21,8 @@ public interface MarcaModeloRepository extends JpaRepository<MarcaModelo, Long>{
 	
 	@Query("SELECT DISTINCT(m.marca) FROM MarcaModelo m ")
 	public List<String> buscarModelos();
-
+	
+	@Query("SELECT DISTINCT(m.marca) FROM MarcaModelo m ")
+	public List<String> buscarMarcas();
 	
 }

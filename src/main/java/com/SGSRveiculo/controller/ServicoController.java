@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SGSRveiculo.enumeracoes.EnumCores;
 import com.SGSRveiculo.enumeracoes.EnumStatus;
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
 import com.SGSRveiculo.frameworkPDS.models.Cliente;
@@ -99,9 +100,9 @@ public class ServicoController {
 		Servico servico = new Servico();
 		
 		//Pegando informações para veículo
-		//List<String> marcas = veiculoService.listarMarcas();
-		//mv.addObject("cores", EnumCores.values());
-		//mv.addObject("marcas", marcas);
+		List<String> marcas = veiculoService.buscarMarcas();
+		mv.addObject("cores", EnumCores.values());
+		mv.addObject("marcas", marcas);
 		
 		mv.addObject("servico", servico);
 		
@@ -111,12 +112,9 @@ public class ServicoController {
 	@GetMapping("/listarModelos" )
 	public  @ResponseBody List<String> listarModelos(String marca){
 		
-		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		List<String> modelos = veiculoService.buscarModelosPorMarca(marca);
 		
-		//return modelos;
-		
-		return null;
-		
+		return modelos;
 	}
 	
 	@PostMapping("/novoServicoOficina")
@@ -138,12 +136,12 @@ public class ServicoController {
 		}
 		else{
 			Veiculo veiculoAtual = null;
-			//List<Veiculo> veiculos = cliente.getVeiculo();
-			/*for (int i = 0; i < veiculos.size(); i++) {
-				if(veiculos.get(i).getPlaca().equals(servico.getVeiculo().getPlaca())){
-					veiculoAtual = veiculoService.buscarPorId(veiculos.get(i).getNumeroChassi());
+			List<Veiculo> veiculos = cliente.getVeiculo();
+			for (int i = 0; i < veiculos.size(); i++) {
+				if(veiculos.get(i).getId().equals(servico.getVeiculo().getId())){
+					veiculoAtual = veiculoService.buscarPorId(veiculos.get(i).getId());
 				}
-			}*/
+			}
 			
 			if(veiculoAtual == null){
 				attributes.addFlashAttribute("message", "Carro não cadastrado.");
@@ -235,19 +233,19 @@ public class ServicoController {
 		
 	}
 	
-	@GetMapping("/proximoStatus")
-	public ModelAndView proximoStatus(@RequestParam(name="id", required=true) Integer id){
-
-		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.proximoStatus(id);
-		return mv;
-	}
-	
 	@GetMapping("/aprovarServico")
 	public ModelAndView aprovarServico(@RequestParam(name="id", required=true) Integer id){
 
+		ModelAndView mv = new ModelAndView("redirect:/cliente");		
+		servicoService.servicoAutorizado(id);
+		return mv;
+	}
+	
+	@GetMapping("/aprovarServicoAdmin")
+	public ModelAndView aprovarServicoAdmin(@RequestParam(name="id", required=true) Integer id){
+
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.aprovarOrcamentoServico(id);
+		servicoService.servicoAutorizado(id);
 		return mv;
 	}
 	
@@ -255,7 +253,15 @@ public class ServicoController {
 	public ModelAndView vistoriaPendente(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.vistoriaPendente(id);
+		servicoService.vistoriaPendente(id);
+		return mv;
+	}
+	
+	@GetMapping("/autorizacaoPendente")
+	public ModelAndView autorizacaoPendente(@RequestParam(name="id", required=true) Integer id){
+
+		ModelAndView mv = new ModelAndView("redirect:/oficina");		
+		servicoService.autorizacaoPendente(id);
 		return mv;
 	}
 	
@@ -263,7 +269,7 @@ public class ServicoController {
 	public ModelAndView naoAutorizado(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.vistoriaPendente(id);
+		servicoService.vistoriaPendente(id);
 		return mv;
 	}
 	
@@ -271,7 +277,7 @@ public class ServicoController {
 	public ModelAndView aguardandoPecas(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.aguardandoPecas(id);
+		servicoService.aguardandoPecas(id);
 		return mv;
 	}
 	
@@ -279,7 +285,7 @@ public class ServicoController {
 	public ModelAndView aguardandoCliente(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.aguardandoCliente(id);
+		servicoService.aguardandoCliente(id);
 		return mv;
 	}
 	
@@ -287,7 +293,15 @@ public class ServicoController {
 	public ModelAndView emAndamento(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.emAndamento(id);
+		servicoService.emAndamento(id);
+		return mv;
+	}
+	
+	@GetMapping("/aguardandoComplemento")
+	public ModelAndView aguardandoComplemento(@RequestParam(name="id", required=true) Integer id){
+
+		ModelAndView mv = new ModelAndView("redirect:/oficina");		
+		servicoService.aguardandoComplemento(id);
 		return mv;
 	}
 	
@@ -295,7 +309,7 @@ public class ServicoController {
 	public ModelAndView finalizado(@RequestParam(name="id", required=true) Integer id){
 
 		ModelAndView mv = new ModelAndView("redirect:/oficina");		
-		//servicoService.finalizado(id);
+		servicoService.finalizado(id);
 		return mv;
 	}
 	

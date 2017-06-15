@@ -18,7 +18,9 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SGSRveiculo.enumeracoes.EnumCores;
 import com.SGSRveiculo.frameworkPDS.models.Cliente;
+import com.SGSRveiculo.frameworkPDS.models.MarcaModelo;
 import com.SGSRveiculo.frameworkPDS.models.Oficina;
 import com.SGSRveiculo.frameworkPDS.models.Orcamento;
 import com.SGSRveiculo.frameworkPDS.models.Peca;
@@ -120,10 +122,13 @@ public class OficinaController {
 		ModelAndView mv = new ModelAndView("oficina/formVeiculoOficina");
 
 		Veiculo veiculo = new Veiculo();
-		//List<String> marcas = veiculoService.listarMarcas();
-		//mv.addObject("cores", EnumCores.values());
-		//mv.addObject("marcas", marcas);
+		List<String> marcas = veiculoService.buscarMarcas();
+		List<Cliente> clientes = clienteService.buscarTodos();
+		
+		mv.addObject("cores", EnumCores.values());
+		mv.addObject("marcas", marcas);
 		mv.addObject("veiculo", veiculo);
+		mv.addObject("clientes", clientes);
 		
 		return mv;
 	}
@@ -131,27 +136,24 @@ public class OficinaController {
 	@GetMapping("/listarModelos" )
 	public  @ResponseBody List<String> listarModelos(String marca){
 		
-		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		List<String> modelos = veiculoService.buscarModelosPorMarca(marca);
 		
-		//return modelos;
-		return null;
+		return modelos;
 		
 	}
 	
 	@PostMapping("/novoVeiculo")
 	public ModelAndView salvarVeiculo(Veiculo veiculo, HttpSession session){
 		
-		
 		ModelAndView mv = new ModelAndView("oficina/formVeiculoOficina");
-		
-		//MarcaModelo m = veiculoService.listarMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
-		
-		//veiculo.setMarcaModelo(m);
-		
-		//veiculo.setCliente(cliente);
-		//cliente.addVeiculo(veiculo);
-		
-		//clienteService.inserir(cliente);
+		Cliente cliente = clienteService.buscarPorId(veiculo.getCliente().getId());
+		if(cliente != null){
+			MarcaModelo marcaModelo = veiculoService.buscarPorMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
+			veiculo.setMarcaModelo(marcaModelo);
+			veiculo.setCliente(cliente);
+			cliente.addVeiculo(veiculo);
+			clienteService.inserir(cliente);
+		}
 		
 		return mv;
 	}
@@ -207,6 +209,8 @@ public class OficinaController {
 			orcamento.setDescontoValor(desconto);
 		
 		Servico servico = servicoService.buscarPorId(idServico);
+		
+		servicoService.autorizacaoPendente(idServico);
 		
 		String msg = "";
 		orcamento.setServico(servico);

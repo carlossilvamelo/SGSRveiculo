@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SGSRveiculo.enumeracoes.EnumStatus;
 import com.SGSRveiculo.frameworkPDS.models.CheckIn;
 import com.SGSRveiculo.frameworkPDS.models.Cliente;
 import com.SGSRveiculo.frameworkPDS.models.Oficina;
@@ -121,11 +122,70 @@ public class ServicoService implements IServicoService{
 	}
 	
 	public void inserirOrcamento(Orcamento orcamento){
-		
 		orcamentoRepository.save(orcamento);
-	
+	}
+
+	@Override
+	public void vistoriaPendente(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.VISTORIA_PENDENTE);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void autorizacaoPendente(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.AUTORIZACAO_PENDENTE);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void servicoAutorizado(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.SERVICO_AUTORIZADO);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void servicoNaoAutorizado(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.SERVICO_NAO_AUTORIZADO);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void aguardandoPecas(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.AGUARDANDO_PECAS);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void aguardandoCliente(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.AGUARDANDO_CLIENTE);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void emAndamento(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.EM_ANDAMENTO);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void aguardandoComplemento(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.AGUARDANDO_COMPLEMENTO);
+		inserir(servicoAtualizado);
+	}
+
+	@Override
+	public void finalizado(Integer id) {
+		Servico servicoAtualizado = buscarPorId(id);
+		servicoAtualizado.setStatus(EnumStatus.FINALIZADO);
+		inserir(servicoAtualizado);
 	}
 	
-	
-
 }

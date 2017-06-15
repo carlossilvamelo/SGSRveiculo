@@ -67,20 +67,23 @@ public class VeiculoService implements IVeiculoService{
 
 	@Override
 	public List<String> buscarModelosPorMarca(String marca) {
-		// TODO Auto-generated method stub
 		return modeloRepository.buscarModelosPorMarca(marca);
 	}
 
 	@Override
 	public MarcaModelo buscarPorMarcaModelo(String marca, String modelo) {
-		// TODO Auto-generated method stub
 		return modeloRepository.buscarPorMarcaModelo(marca, modelo);
 	}
 
 	@Override
 	public List<String> buscarModelos() {
-		// TODO Auto-generated method stub
 		return modeloRepository.buscarModelos();
+	}
+	
+	@Override
+	public List<String> buscarMarcas() {
+		// TODO Auto-generated method stub
+		return modeloRepository.buscarMarcas();
 	}
 	
 	@Override
@@ -101,8 +104,6 @@ public class VeiculoService implements IVeiculoService{
 		
 		
 		veiculoRepository.save(veiculo);
-		
-		
 		
 }
 

@@ -27,6 +27,17 @@ public interface IServicoService {
 	public List<CheckIn> listarCheckIn(Integer id);
 	public void verificarServico(Integer id);
 	public void inserirOrcamento(Orcamento orcamento);
+	
+	public void vistoriaPendente(Integer id);
+	public void autorizacaoPendente(Integer id);
+	public void servicoAutorizado(Integer id);
+	public void servicoNaoAutorizado(Integer id);
+	public void aguardandoPecas(Integer id);
+	public void aguardandoCliente(Integer id);
+	public void emAndamento(Integer id);
+	public void aguardandoComplemento(Integer id);
+	public void finalizado(Integer id);
+	
 
 	
 	

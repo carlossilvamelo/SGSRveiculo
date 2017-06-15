@@ -28,6 +28,8 @@ public interface IVeiculoService {
 	public List<String> buscarModelos();
 	
 	void adicionarInfoExtra(InfoExtraVeiculo infoExtra);
+
+	List<String> buscarMarcas();
 		
 }
 
